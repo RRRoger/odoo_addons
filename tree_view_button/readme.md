@@ -1,3 +1,8 @@
+
+### 1.安装本模块
+
+### 2.在对应model里面添加函数
+
 ```python
 def button1(self, select_ids):
     print select_ids # 选中的订单id
@@ -16,6 +21,7 @@ def button1(self, select_ids):
     return res
 ```
 
+### 3.在要添加button的tree view编辑
 ```xml
 <?xml version="1.0"?>
 <tree buttons='[["button1", "按钮1"], ["buttonN", "按钮N"]]'>
