@@ -25,6 +25,9 @@ def button1(self, select_ids):
 
 ```xml
 <?xml version="1.0"?>
+<!--
+buttons: 严格的json格式
+-->
 <tree buttons='[["button1", "按钮1"], ["buttonN", "按钮N"]]'>
      <field name="sequence" widget="handle"/>
      ...
