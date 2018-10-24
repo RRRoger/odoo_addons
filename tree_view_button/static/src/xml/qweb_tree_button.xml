@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-name="TreeButton.buttons">
+        <t t-if="widget.options.buttons">
+            <t t-foreach="widget.options.buttons" t-as="bt">
+                <button type="button" t-att-class="'btn btn-sm btn-default o_list_button_'+bt[0]">
+                    <t t-esc="_(bt[1])"/>
+                </button>
+            </t>
+        </t>
+    </t>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_save" t-operation="after">
+           <t t-call="TreeButton.buttons"/>
+        </t>
+    </t>
+</templates>
