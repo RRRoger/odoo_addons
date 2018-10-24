@@ -22,10 +22,20 @@ def button1(self, select_ids):
 ```
 
 ### 3.在要添加button的tree view编辑
+
 ```xml
 <?xml version="1.0"?>
 <tree buttons='[["button1", "按钮1"], ["buttonN", "按钮N"]]'>
      <field name="sequence" widget="handle"/>
      ...
 </tree>
+```
+
+### 4.参数解释
+
+```python
+["button1", "按钮1"]
+# button1 是该model下的函数
+# 按钮1 按钮显示的文本
+# todo 之后添加翻译and权限
 ```
