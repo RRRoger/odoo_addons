@@ -1,5 +1,5 @@
-# odoo_addons
+# odoo_addons / odoo插件
 
-> Odoo addons
+> Odoo addons / odoo插件
 
 ### 1.[tree视图自定义添加按钮](tree_view_button)
