@@ -57,7 +57,7 @@ odoo.define('roger.tree_buttons_action', function (require) {
             console.log(buttons);
             if(add_button && buttons){
                 for(var i=0; i<buttons.length; i++){
-                    this.$buttons.on('click', '.o_list_button_' + buttons[i][0], tree_buttons_action.bind(this, buttons[i]));
+                    this.$buttons.on('click', '.o_tree_bt_' + buttons[i][0], tree_buttons_action.bind(this, buttons[i]));
                 }
             }
         }
