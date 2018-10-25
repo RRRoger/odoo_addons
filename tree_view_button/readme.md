@@ -36,9 +36,13 @@ buttons: 严格的json格式
 
 ### 4.参数解释
 
-```python
+- function
+`select_ids` tree view中选中的记录的id
+
+- xml
 ["button1", "按钮1"]
-# button1 是该model下的函数
-# 按钮1 按钮显示的文本
-# todo 之后添加翻译and权限
-```
+`button1` 是该model下的函数
+`按钮1` 按钮显示的文本
+
+- todo 之后添加翻译and权限
+
