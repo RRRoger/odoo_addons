@@ -2,7 +2,7 @@
 
 {
     'name': 'Tree View Button',
-    'version': '1.0.0',
+    'version': '1.0.2',
     'category': 'Tools',
     'sequence': 12,
     'author': 'Roger',

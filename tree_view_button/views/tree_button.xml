@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="assets_backend" name="excel export assets" inherit_id="web.assets_backend">
+    <template id="assets_backend" name="tree view btn assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/tree_view_button/static/src/js/tree_button.js"/>
         </xpath>
