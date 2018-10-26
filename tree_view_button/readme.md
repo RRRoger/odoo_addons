@@ -1,4 +1,8 @@
 
+### 0.效果图
+
+![](static/description/demo.png)
+
 ### 1.安装本模块
 
 ### 2.在对应model里面添加函数
