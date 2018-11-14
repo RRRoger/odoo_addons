@@ -2,14 +2,10 @@ odoo.define('roger.tree_buttons_action', function (require) {
     "use strict";
 
     var ListView = require('web.ListView');
-    var session = require('web.session');
-    var FormView = require('web.FormView');
-    var KanbanView = require('web_kanban.KanbanView');
-    var common = require('web.form_common');
     var data = require('web.data');
     var Model = require('web.DataModel');
     var web_client = require('web.web_client');
-
+    var session = require('web.session');
 
     // 判断obj是不是字段
     function isJson(obj){
@@ -37,13 +33,28 @@ odoo.define('roger.tree_buttons_action', function (require) {
             }
         });
         return res;
-    }
+    };
+
+    function setOptionsButtons(self, buttons){
+        session.rpc('/web/dataset/call_kw', {
+            model: 'tvb.adapter',
+            method: 'button_filter',
+            args: [1, JSON.stringify(buttons)],
+            kwargs: {context: self.dataset.context}
+        }).then(function (results) {
+            if (results.length>0) {
+                self.options.buttons = results;
+            } else {
+                self.options.buttons = [];
+            }
+        }, null);
+    };
 
     ListView.include({
         init: function() {
             this._super.apply(this, arguments);
             if(this.is_action_enabled('buttons')){
-                this.options.buttons = this.is_action_enabled('buttons');
+                setOptionsButtons(this, this.is_action_enabled('buttons'))
             }
         },
         render_buttons: function() {
