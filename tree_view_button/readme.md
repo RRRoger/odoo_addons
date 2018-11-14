@@ -32,7 +32,11 @@ def button1(self, select_ids):
 <!--
 buttons: 严格的json格式
 -->
-<tree buttons='[["button1", "按钮1"], ["buttonN", "按钮N"]]'>
+<tree buttons='[
+          ["method1", "动作1/Action1", "base.group_system"], 
+          ["method2", "动作2/Action2", ""], 
+          ["method3", "动作3/Action3", "base.group_system,base.group_user"] 
+      ]'>
      <field name="sequence" widget="handle"/>
      ...
 </tree>
@@ -47,12 +51,20 @@ buttons: 严格的json格式
 - xml
 
 ```json
-[["button1", "按钮1"], ["buttonN", "按钮N"]]
+[
+  ["method1", "动作1/Action1", "base.group_system"], 
+  ["method2", "动作2/Action2", ""], 
+  ["method3", "动作3/Action3", "base.group_system,base.group_user"] 
+]
 ```
 
-`button1` 是该model下的函数
+`method1` 是该model下的函数
 
-`按钮1` 按钮显示的文本
+`动作1/Action1` 按钮显示的文本(`中文`/`English`)
 
-- todo 之后添加翻译and权限
+`base.group_system` 权限组,同`FormView`里面写法
+
+## Ps: 
+
+- ~`DONE` #Todo 之后添加翻译and权限
 
