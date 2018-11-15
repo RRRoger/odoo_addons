@@ -51,6 +51,8 @@ class TvbAdapter(models.AbstractModel):
         for button in buttons:
             zh, en = button[1].split(delimiter)
             button[1] = zh if self._context.get('lang') == 'zh_CN' else en
-            if self.check_user_groups(button[2]):
+            if len(button) > 2 and self.check_user_groups(button[2]):
+                res.append(button)
+            else:
                 res.append(button)
         return res
