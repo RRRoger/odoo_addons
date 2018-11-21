@@ -66,5 +66,5 @@ buttons: 严格的json格式
 
 ## Ps: 
 
-- ~`DONE` #Todo 之后添加翻译and权限
+- ~`DONE` ~~#Todo 之后添加翻译and权限~~
 

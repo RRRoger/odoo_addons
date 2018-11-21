@@ -4,7 +4,7 @@
     <t t-name="TreeButton.buttons">
         <t t-if="widget.options.buttons">
             <t t-foreach="widget.options.buttons" t-as="bt">
-                <button type="button" t-att-class="'btn btn-sm btn-primary o_tree_bt_'+bt[0]">
+                <button type="button" t-att-class="'btn btn-sm btn-default o_tree_bt_'+bt[0]">
                     <t t-esc="_(bt[1])"/>
                 </button>
             </t>
