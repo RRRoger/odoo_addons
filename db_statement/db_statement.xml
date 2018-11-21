@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="db_statement_form" model="ir.ui.view">
+            <field name="name">db_statement.form</field>
+            <field name="model">db.statement</field>
+            <field name="arch" type="xml">
+                <form string="数据库操作" version="7.0" groups="base.group_no_one">
+                    <header>
+                        <button name="button_execute_sql" string="执行sql语句" type="object" groups="base.group_no_one"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="csv_name" invisible="1"/>
+                            </group>
+                            <group/>
+                        </group>
+                        <group>
+                            <field name="sql" required="1"/>
+                            <field name="csv" filename="csv_name" readonly="1" attrs="{'invisible':[('csv', '=', False)]}"/>
+                            <field name="result" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="db_statement_tree" model="ir.ui.view">
+            <field name="name">db_statement.tree</field>
+            <field name="model">db.statement</field>
+            <field name="arch" type="xml">
+                <tree string="数据库操作">
+                    <field name="name"/>
+                    <field name="brief_result"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="db_statement_action" model="ir.actions.act_window">
+            <field name="name">数据库操作</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">db.statement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="db_statement_tree"/>
+        </record>
+
+
+        <menuitem id="menu_db_statement" name="语句操作" parent="base.menu_custom" sequence="200"
+                  action="db_statement_action" groups="base.group_no_one"/>
+
+
+    </data>
+</odoo>
