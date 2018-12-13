@@ -370,6 +370,8 @@ class IrModel(models.Model):
                 body = body and '%s\n</ul>' % body
                 if body and not body == '<ul>\n</ul>' and message and hasattr(idx, 'message_post'):
                     idx.message_post(body, _('Changes in Fields'))
+                    # If you need to use it, get it with `self.env.track_body`, e.g. Send mail
+                    self.env.track_body = body
             return write.origin(self, vals)
         return write
 
