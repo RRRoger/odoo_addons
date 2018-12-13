@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* message_post_model
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-13 07:29+0000\n"
+"PO-Revision-Date: 2018-12-13 07:29+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:171
+#, python-format
+msgid "%s<h5 style=\"color:red;\">Line %s</h5>"
+msgstr "%s<h5 style=\"color:red;\">行 %s</h5>"
+
+#. module: message_post_model
+#: model:ir.actions.server,name:message_post_model.add_track_ir_model
+msgid "Add Tracking"
+msgstr "添加跟踪"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:117
+#, python-format
+msgid "Added"
+msgstr "已添加"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:372
+#, python-format
+msgid "Changes in Fields"
+msgstr "Changes in Fields"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:75
+#, python-format
+msgid "Created New Line"
+msgstr "新增行"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:118
+#, python-format
+msgid "Deleted"
+msgstr "删除"
+
+#. module: message_post_model
+#: model:ir.model.fields,field_description:message_post_model.field_ir_model_exclude_fields_text
+msgid "Exclude External Fields"
+msgstr "排除额外字段"
+
+#. module: message_post_model
+#: model:ir.model.fields,field_description:message_post_model.field_ir_model_exclude_field_ids
+msgid "Excluded Fields"
+msgstr "排除字段"
+
+#. module: message_post_model
+#: model:ir.model.fields,help:message_post_model.field_ir_model_exclude_field_ids
+msgid "List of fields that you want to exclude of the traking"
+msgstr "你想排除的字段列表"
+
+#. module: message_post_model
+#: model:ir.model,name:message_post_model.model_ir_model
+msgid "Models"
+msgstr "模型"
+
+#. module: message_post_model
+#: model:ir.model.fields,help:message_post_model.field_ir_model_exclude_fields_text
+msgid "Name of the fields that you want to exclude but these does not have a directly relation with the model. \n"
+"This text must be the database field name separated by (,) without spaces. E.g. name,date,notes"
+msgstr "要排除的字段的名称，但这些字段与模型没有直接关系。\n"
+"这个文本必须是数据库字段名，以(,)分隔，没有空格。如名称、日期、笔记"
+
+#. module: message_post_model
+#: model:ir.actions.server,name:message_post_model.remove_track_ir_model
+msgid "Remove Tracking"
+msgstr "移出跟踪"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:77
+#: code:addons/message_post_model/model/message_post.py:78
+#, python-format
+msgid "Removed Line"
+msgstr "删除行"
+
+#. module: message_post_model
+#: model:ir.model.fields,help:message_post_model.field_ir_model_tracked
+msgid "This field identifies if the fields in this models are being tracked"
+msgstr "此字段标识是否正在跟踪该模型中的字段"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:385
+#, python-format
+msgid "This model does not have a relation with mail.message. For this feature work the model must have at least an inheritance with mail.thread"
+msgstr "这个模型与mail.message没有关系。对于这个特性，模型必须至少具有mail.thread的继承"
+
+#. module: message_post_model
+#: model:ir.model.fields,field_description:message_post_model.field_ir_model_tracked
+msgid "Tracked"
+msgstr "跟踪"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:76
+#, python-format
+msgid "Updated Line"
+msgstr "更新行"
+
+#. module: message_post_model
+#: code:addons/message_post_model/model/message_post.py:79
+#, python-format
+msgid "many2many"
+msgstr "many2many"
+
