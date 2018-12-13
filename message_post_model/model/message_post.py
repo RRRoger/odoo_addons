@@ -352,7 +352,7 @@ class IrModel(models.Model):
                                                     field_str, n_obj,
                                                     exclude_names, last_value)
                         body = len(message.split('\n')) > 2 and \
-                            '%s\n%s: %s' % (
+                            '%s\n<li><b>%s: </b></li>%s' % (
                             body, field_str, message) or body
 
                     elif self._fields[field].type == 'many2one':
