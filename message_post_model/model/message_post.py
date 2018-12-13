@@ -26,8 +26,7 @@ from openerp import models, api, _, fields, SUPERUSER_ID
 from openerp.exceptions import Warning as UserError
 
 
-def get_last_value(self, ids, model=None, field=None,
-                   fieldtype=None):
+def get_last_value(self, ids, model=None, field=None, fieldtype=None):
     """Return the last value of a record in the model to show a post
     with the change
     @param ids: int with id record
@@ -41,8 +40,7 @@ def get_last_value(self, ids, model=None, field=None,
     model_obj = self.env[model]
     model_brw = model_obj.browse(ids)
     if 'many2one' in fieldtype:
-        value = field and model_brw[field] and \
-            model_brw[field].name_get() or ''
+        value = field and model_brw[field] and model_brw[field].name_get() or ''
         value = value and value[0][1]
     elif 'many2many' in fieldtype:
         value = [i.id for i in model_brw[field]]
@@ -95,21 +93,20 @@ def prepare_many_info(self, ids, records, string, n_obj, exclude_names,
                 else:
                     inner_msg = value.get(r_name)
 
-                message = '%s\n<h5><b style="color:blue;">%s</b>: %s</h5>' % \
-                    (get_encode_value(message),
-                        get_encode_value(info.get(val[0])),
-                        get_encode_value(inner_msg))
+                message = '%s\n<h5><b style="color:blue;">%s</b>: %s</h5>' % (
+                    get_encode_value(message),
+                    get_encode_value(info.get(val[0])),
+                    get_encode_value(inner_msg))
 
             elif val[0] in (2, 3):
                 model_brw = obj.browse(val[1])
                 last_value = model_brw.name_get()
                 last_value = last_value and last_value[0][1]
                 value = val[1]
-
-                message = '%s\n<h5><b style="color:blue;">%s</b>: %s<h5>' % \
-                    (get_encode_value(message),
-                        get_encode_value(info.get(val[0])),
-                        get_encode_value(last_value))
+                message = '%s\n<h5><b style="color:blue;">%s</b>: %s<h5>' % (
+                    get_encode_value(message),
+                    get_encode_value(info.get(val[0])),
+                    get_encode_value(last_value))
 
             elif val[0] == 6:
                 lastv = list(set(val[2]) - set(last))
@@ -117,24 +114,23 @@ def prepare_many_info(self, ids, records, string, n_obj, exclude_names,
                 add = _('Added')
                 delete = _('Deleted')
                 if lastv and not new:
-                    dele = [obj.browse(i).name_get()[0][1]
-                            for i in lastv]
+                    dele = [obj.browse(i).name_get()[0][1] for i in lastv]
                     mes = ' - '.join(dele)
-                    message = '%s\n<li><b style="color:blue;">%s %s</b>: %s</li>' % \
-                        (get_encode_value(message),
-                            get_encode_value(add),
-                            get_encode_value(string),
-                            get_encode_value(mes))
-                if not lastv and new:
+                    message = '%s\n<li><b style="color:blue;">%s %s</b>: %s</li>' % (
+                        get_encode_value(message),
+                        get_encode_value(add),
+                        get_encode_value(string),
+                        get_encode_value(mes))
 
+                if not lastv and new:
                     dele = [obj.browse(i).name_get()[0][1]
                             for i in new]
                     mes = '-'.join(dele)
                     message = '%s\n<li><b style="color:blue;">%s %s</b>: %s</li>' % \
-                        (get_encode_value(message),
-                            get_encode_value(delete),
-                            get_encode_value(string),
-                            get_encode_value(mes))
+                              (get_encode_value(message),
+                               get_encode_value(delete),
+                               get_encode_value(string),
+                               get_encode_value(mes))
 
             elif val[0] == 1:
                 vals = val[2]
@@ -142,37 +138,23 @@ def prepare_many_info(self, ids, records, string, n_obj, exclude_names,
                 for field in vals:
                     if field in exclude_names:
                         continue
-                    if obj._fields[field].type in \
-                            ('one2many', 'many2many'):
-                        is_many = \
-                            obj._fields[field].type == 'many2many'
-
-                        last_value = is_many and \
-                            get_last_value(self, val[1], n_obj, field,
-                                           'many2many')
+                    if obj._fields[field].type in ('one2many', 'many2many'):
+                        is_many = obj._fields[field].type == 'many2many'
+                        last_value = is_many and get_last_value(self, val[1], n_obj, field, 'many2many')
                         field_str = get_string_by_field(obj, field)
                         new_n_obj = obj._fields[field].comodel_name
-                        mes = prepare_many_info(self, val[1],
-                                                vals[field], field_str,
-                                                new_n_obj,
-                                                exclude_names,
+                        mes = prepare_many_info(self, val[1], vals[field], field_str, new_n_obj, exclude_names,
                                                 last_value)
 
                     elif obj._fields[field].type == 'many2one':
-                        mes = prepare_many2one_info(self, val[1],
-                                                    n_obj, field, vals)
+                        mes = prepare_many2one_info(self, val[1], n_obj, field, vals)
 
                     elif 'many' not in obj._fields[field].type:
-                        mes = prepare_simple_info(self, val[1], n_obj, field,
-                                                  vals)
+                        mes = prepare_simple_info(self, val[1], n_obj, field, vals)
                     if mes and mes != '<p>':
-                        message = id_line != val[1] and \
-                            _('%s<h5 style="color:red;">Line %s</h5>' %
-                                (message, val[1])) \
-                            or message
-                        message = '%s\n%s' % \
-                            (get_encode_value(message),
-                                mes)
+                        message = id_line != val[1] and _(
+                            '%s<h4 style="color:red;">Line %s</h4>' % (message, val[1])) or message
+                        message = '%s\n%s' % (get_encode_value(message), mes)
                         id_line = val[1]
 
     message = '%s\n</ul>' % get_encode_value(message)
@@ -236,19 +218,17 @@ def prepare_many2one_info(self, ids, n_obj, field, vals):
     obj = self.env[n_obj]
     message = '<p>'
 
-    last_value = get_last_value(self,
-                                ids, obj._name, field,
-                                obj._fields[field].type)
+    last_value = get_last_value(self, ids, obj._name, field, obj._fields[field].type)
     model_obj = self.env[obj._fields[field].comodel_name]
     model_brw = model_obj.browse(vals[field])
     new_value = model_brw.name_get()
     new_value = new_value and new_value[0][1]
 
     if not (last_value == new_value) and any((new_value, last_value)):
-        message = '<li><b>%s</b>: %s → %s</li>' % \
-            (get_string_by_field(obj, field),
-                get_encode_value(last_value),
-                get_encode_value(new_value))
+        message = '<li><b>%s</b>: %s → %s</li>' % (
+            get_string_by_field(obj, field),
+            get_encode_value(last_value),
+            get_encode_value(new_value))
     return message
 
 
@@ -265,8 +245,7 @@ def get_encode_value(value):
     return val
 
 
-def prepare_simple_info(self, ids, n_obj, field,
-                        vals):
+def prepare_simple_info(self, ids, n_obj, field, vals):
     """Generate the message to be shown when simple fields(without
     relations) are changed
     @param ids: Identifiers of the record to be changed
@@ -282,44 +261,36 @@ def prepare_simple_info(self, ids, n_obj, field,
     """
     obj = self.env[n_obj]
     message = '<p>'
-    last_value = get_last_value(self,
-                                ids, obj._name, field,
-                                obj._fields[field].type)
+    last_value = get_last_value(self, ids, obj._name, field, obj._fields[field].type)
 
-    last_value = obj._fields[field].type == 'selection' and \
-        get_selection_value(obj, field, last_value) or last_value
-    new_value = obj._fields[field].type == 'selection' and \
-        get_selection_value(obj, field, vals[field]) or vals[field]
+    last_value = obj._fields[field].type == 'selection' and get_selection_value(obj, field, last_value) or last_value
+    new_value = obj._fields[field].type == 'selection' and get_selection_value(obj, field, vals[field]) or vals[field]
     last_value = get_encode_value(last_value)
     new_value = get_encode_value(new_value)
 
     message = ((last_value != new_value) and
-               any((last_value, vals[field]))) and \
-        '<li><b>%s</b>: %s → %s</li>' % \
-        (get_string_by_field(obj, field), last_value,
-            new_value) or '<p>'
+               any((last_value, vals[field]))) and '<li><b>%s</b>: %s → %s</li>' % (
+                                                                            get_string_by_field(obj, field),
+                                                                            last_value,
+                                                                            new_value) or '<p>'
     return message
 
 
 class IrModel(models.Model):
-
     _inherit = 'ir.model'
 
-    exclude_field_ids = fields.Many2many('ir.model.fields',
-                                         string='Excluded Fields',
+    exclude_field_ids = fields.Many2many('ir.model.fields', string='Excluded Fields',
                                          help='List of fields that you '
-                                         'want to exclude of the traking')
+                                              'want to exclude of the traking')
     exclude_fields_text = fields.Char('Exclude External Fields',
                                       help='Name of the fields that you '
-                                      'want to exclude but these does '
-                                      'not have a directly relation with '
-                                      'the model. \nThis text must be the '
-                                      'database field name separated by '
-                                      '(,) without spaces. '
-                                      'E.g. name,date,notes')
-    tracked = fields.Boolean('Tracked',
-                             help='This field identifies if the fields '
-                             'in this models are being tracked')
+                                           'want to exclude but these does '
+                                           'not have a directly relation with '
+                                           'the model. \nThis text must be the '
+                                           'database field name separated by '
+                                           '(,) without spaces. '
+                                           'E.g. name,date,notes')
+    tracked = fields.Boolean('Tracked', help='This field identifies if the fields in this models are being tracked')
 
     def write_track_all(self):
 
@@ -327,12 +298,10 @@ class IrModel(models.Model):
         def write(self, vals):
             """Added a message in the record with the details of the fields changed
             """
-            model = self.env['ir.model'].\
-                search([('model', '=', str(self._name))])
+            model = self.env['ir.model'].search([('model', '=', str(self._name))])
 
             exclude_names = model.exclude_field_ids.mapped('name')
-            exclude_names += model.exclude_fields_text and \
-                model.exclude_fields_text.split(',') or []
+            exclude_names += model.exclude_fields_text and model.exclude_fields_text.split(',') or []
             for idx in self:
                 body = '<ul>'
                 message = ''
@@ -342,29 +311,18 @@ class IrModel(models.Model):
                     if self._fields[field].type in ('one2many', 'many2many'):
                         is_many = self._fields[field].type == 'many2many'
 
-                        last_value = is_many and \
-                            get_last_value(self, idx.id, self._name, field,
-                                           'many2many')
+                        last_value = is_many and get_last_value(self, idx.id, self._name, field, 'many2many')
                         field_str = get_string_by_field(self, field)
                         n_obj = self._fields[field].comodel_name
-                        message = prepare_many_info(self,
-                                                    idx.id, vals[field],
-                                                    field_str, n_obj,
-                                                    exclude_names, last_value)
-                        body = len(message.split('\n')) > 2 and \
-                            '%s\n<li><b>%s: </b></li>%s' % (
-                            body, field_str, message) or body
+                        message = prepare_many_info(self, idx.id, vals[field], field_str, n_obj, exclude_names, last_value)
+                        body = len(message.split('\n')) > 2 and '%s\n<li><b>%s: </b></li>%s' % (body, field_str, message) or body
 
                     elif self._fields[field].type == 'many2one':
-                        message = \
-                            prepare_many2one_info(self, idx.id, self._name,
-                                                  field, vals)
+                        message = prepare_many2one_info(self, idx.id, self._name, field, vals)
                         body = '%s\n%s' % (body, message)
 
                     elif 'many' not in self._fields[field].type:
-                        message = \
-                            prepare_simple_info(self, idx.id, self._name,
-                                                field, vals)
+                        message = prepare_simple_info(self, idx.id, self._name, field, vals)
                         body = '%s\n%s' % (body, message)
 
                 body = body and '%s\n</ul>' % body
@@ -373,6 +331,7 @@ class IrModel(models.Model):
                     # If you need to use it, get it with `self.env.track_body`, e.g. Send mail
                     self.env.track_body = body
             return write.origin(self, vals)
+
         return write
 
     @api.multi
@@ -414,4 +373,3 @@ class IrModel(models.Model):
                 obj = env[record.model]
                 obj._patch_method('write', self.write_track_all())
         return super(IrModel, self)._register_hook()
-
