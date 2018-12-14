@@ -1,83 +1,81 @@
-Message Post Log
+消息发布日志
 ================
 
-This module adds an extended log in any model with inheritance over an object
-that create the field message_ids(mail.message) for each change made in the
-fields of the model unlike the traditional way in wich Odoo did.
+此模块在任何具有对象继承的模型中添加扩展日志
+为每个更改创建字段message_ids（mail.message）
+该模型的领域不同于Odoo所做的传统方式。
 
-Features
+特征
 --------
 
-We add two server action to add o remove the feature in the model, with this
-you do not requiere modify the code directly at least that you model does not
-have a direct relation with mail.message
+我们添加了两个服务器操作来添加o删除模型中的功能
+你不需要直接修改代码，至少你的模型没有
+与mail.message有直接关系
 
-In the ir.model object we added three new fields:
+在ir.model对象中，我们添加了三个新字段：
 
-    .. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLRFYwcTBYT2ZUQ1E
+    .. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLRFYwcTBYT2ZUQ1E
 
-    - Tracked: A boolean to indicate if the model has the track activated
-    - Exclude Fields: A many2many field to indicate if you want to exclude of
-      the track some fields related with the model
-    - Exclude External Fields: A string to specify fields(database name) that
-      does not have a direct relation with the object. This fields must be
-      separaten by (,) without spaces among them. E.g
-      product_uom_qty,product_uos_qty,name
-
-    
-
-- To add the track: 
-
-    .. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLSWhKOTZFVzRack0
-
-- To remove it: 
-    .. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLZ1k5dEpBQUpDVUk
-
-At the moment to add the track over the object in each change that a record
-has, a message is left in the log
-
-.. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLdkY3aUpNWWJLYjA
-
-If you want to exclude some fields of the model to avoid left a message if
-these fields are changed you can use the field "Exclude Fields" explained
-previously
-
-.. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLaUtPUnMxNE9LMDA
-
-In some case you will need to exclude fields that does not have a direct
-relation of the main model(The quantity in a line of an order) and these do not
-apper in the Exclude Fields(many2many with domain). For these fields exist the
-"Exclude External fields", where you will can specify this fields separate by (,) 
-without spaces among them
-
-.. image:: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLbUxtQlBhdTItekU
+    - 已跟踪：一个布尔值，用于指示模型是否已激活轨道
+    - 排除字段：一个many2many字段，用于指示是否要排除
+      轨道一些与模型相关的领域
+    - 排除外部字段：用于指定字段（数据库名称）的字符串
+      与对象没有直接关系。这个字段必须是
+      由（，）分隔，其中没有空格。例如
+      product_uom_qty，product_uos_qty，名称
 
 
-Also, if you need it, there is a testing module called message_post_test to
-prove the funtionality.
 
-Requirements:
+- 添加跟踪：
+
+    .. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLSWhKOTZFVzRack0
+
+- 删除跟踪：
+    .. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLZ1k5dEpBQUpDVUk
+
+此刻，在每个更改记录中添加对象的跟踪
+有消息留在日志中
+
+.. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLdkY3aUpNWWJLYjA
+
+如果要排除模型的某些字段，以避免产生消息
+这些字段已更改，您可以使用“排除字段”字段进行说明
+
+.. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLaUtPUnMxNE9LMDA
+
+在某些情况下，您需要排除没有直接的字段
+主模型的关系（订单行中的数量）和这些不相关
+排除字段中的apper（many2many with domain）。对于这些领域存在的
+“排除外部字段”，您可以在其中单独指定此字段（，）
+他们之间没有空格
+
+.. image :: https://drive.google.com/uc?export=view&id=0B2kzKLGF6ZvLbUxtQlBhdTItekU
+
+
+此外，如果您需要它，还有一个名为message_post_test的测试模块
+证明功能。
+
+要求：
 -------------
-- Go to https://github.com/Vauxoo/addons-vauxoo and download the repo in order to install message_post_model and message_post_test modules.
+- 转到https://github.com/Vauxoo/addons-vauxoo并下载repo以安装message_post_model和message_post_test模块。
 
-Contributors
+贡献者
 ------------
 
-* José Morales <jose@vauxoo.com>
+*JoséMorales<jose@vauxoo.com>
 
-Maintainer
+维护者
 ----------
 
-.. image:: https://www.vauxoo.com/logo.png
-   :alt: Vauxoo
-   :target: https://vauxoo.com
+.. image :: https://www.vauxoo.com/logo.png
+   ：alt：Vauxoo
+   ：target：https：//vauxoo.com
 
-This module is maintained by Vauxoo.
+该模块由Vauxoo维护。
 
-A latinamerican company that provides training, coaching,
-development and implementation of enterprise management
-sytems and bases its entire operation strategy in the use
-of Open Source Software and its main product is odoo.
+一家拉丁美洲公司，提供培训，指导，
+开发和实施企业管理
+系统并将其整个运营策略基于使用
+开源软件及其主要产品是odoo。
 
-To contribute to this module, please visit http://www.vauxoo.com. 
-
+要参与此模块，请访问http://www.vauxoo.com。
