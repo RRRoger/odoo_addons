@@ -1,4 +1,4 @@
-# odoo_addons / odoo插件
+# odoo_addons / odoo10插件
 
 > Odoo addons / odoo插件
 
