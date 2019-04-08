@@ -8,4 +8,4 @@
 
 ### 3.[[message_post_model] 消息日志跟踪增强](message_post_model)
 
-### 4.[Row Number in tree/list view](https://www.odoo.com/apps/modules/8.0/rowno_in_tree/)
+### 4.[Row Number in tree/list view](rowno_in_tree)

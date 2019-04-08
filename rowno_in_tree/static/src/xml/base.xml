@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<!-- <t t-extend="One2Many.listview">
+	    <t t-jquery="[t-set*='columns_count']" t-operation="replace">
+			<t t-set="columns_count"
+	t-value="visible_columns.length + (options.selectable ? 1 : 0) + (options.deletable ? 1 : 0) + 1" />
+		</t>
+		
+	    <t t-jquery="thead tr t[t-foreach*='columns'][t-as*='column']:first"
+	t-operation="after">
+	      <th width="1">#</th>
+	    </t>
+	    <t t-jquery="tfoot tr td[t-if*='options.selectable']"
+	t-operation="before">
+	      <td></td>
+	    </t>
+	</t> -->
+	<table t-extend="ListView">
+		<t t-jquery="[t-set*='columns_count']" t-operation="replace">
+			<t t-set="columns_count"
+	t-value="visible_columns.length + (options.selectable ? 1 : 0) + (options.deletable ? 1 : 0) + 1" />
+		</t>
+		
+	    <t t-jquery="thead tr t[t-foreach*='columns'][t-as*='column']:first"
+	t-operation="after">
+		<t t-set="options.row_number_column" t-value="1"/>
+	      <th width="1">#</th>
+	    </t>
+	    
+	    <t t-jquery="tfoot tr td[t-if*='options.selectable']"
+	t-operation="before">
+	      <td></td>
+	    </t>
+	</table>
+	<t t-extend="ListView.rows">
+	    <t t-jquery="[t-set*='record']" t-operation="after">
+	      <t t-set="row_number" t-value="index+1" />
+	    </t>
+	</t>
+	<tr t-extend="ListView.row">
+		<t t-jquery="td[t-if*='options.selectable']" t-operation="before">
+	      <t t-if="row_number">
+	      	<th width="1"><t t-esc="row_number" /> </th>
+	      </t>
+	      <t t-else="">
+	      	<th width="1"><t t-esc="options.row_number" /> </th>
+	      </t>
+	    </t>
+	</tr>
+</templates>
+
