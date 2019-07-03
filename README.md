@@ -10,6 +10,8 @@
 
 #### (4). [Row Number in tree/list view](rowno_in_tree)
 
+#### (5). [Data Analysis Report ](hs_query)
+
 
 ## 1. tools
 
