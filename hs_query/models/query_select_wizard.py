@@ -140,10 +140,10 @@ WHERE user_id = %s and statement_code = '%s';
 
         now = datetime.datetime.now() + datetime.timedelta(hours=8)
 
-        xls_name = u'%s(%s).xls' % (query.name, now.strftime('%Y%m%d%H%M%S'))
+        xls_name = u'%s(%s).xlsx' % (query.name, now.strftime('%Y%m%d%H%M%S'))
 
         # 生成excel所需要的数据
-        base_data = excel_adapter.excel_data_getter_for_xls(u'查询结果', excel_data)
+        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data)
 
         # 调用创建下载
         download_file_id = self.create_download_file(xls_name, base_data, query.id)

@@ -13,7 +13,7 @@ from cStringIO import StringIO
 import os
 
 
-def excel_data_getter(name, excel_data, full_dir, sheet2name=None, sheet2data=None):
+def save_excel(name, excel_data, full_dir, sheet2name=None, sheet2data=None):
     """
         在本地生成excel临时文件, 返回路径待上传
         sheet2name & sheet2data 用来记录报表查询的条件
@@ -35,7 +35,33 @@ def excel_data_getter(name, excel_data, full_dir, sheet2name=None, sheet2data=No
     return path
 
 
-def excel_data_getter_for_xls(name, excel_data, sheet2name=None, sheet2data=None):
+def _excel_data_getter_for_xlsx(name, excel_data, sheet2name=None, sheet2data=None):
+    """
+        在本地生成excel临时文件, 返回路径待上传
+        sheet2name & sheet2data 用来记录报表查询的条件
+    """
+    wb = Workbook()
+    # 激活 worksheet
+    ws = wb.active
+    ws.title = name
+    # 可以附加行，从第一列开始附加
+    for r in excel_data:
+        ws.append(r)
+
+    if sheet2data:
+        ws2 = wb.create_sheet(title=sheet2name)
+        for r in sheet2data:
+            ws2.append(r)
+
+    fp = StringIO()
+    wb.save(fp)
+    fp.seek(0)
+    data = fp.read()
+    fp.close()
+    return data
+
+
+def _excel_data_getter_for_xls(name, excel_data, sheet2name=None, sheet2data=None):
     """
         在本地生成excel临时文件, 返回路径待上传
         sheet2name & sheet2data 用来记录报表查询的条件
@@ -140,6 +166,12 @@ def excel_data_getter_for_xls(name, excel_data, sheet2name=None, sheet2data=None
     data = fp.read()
     fp.close()
     return data
+
+
+if None:
+    excel_data_getter = _excel_data_getter_for_xlsx
+else:
+    excel_data_getter = _excel_data_getter_for_xls
 
 
 def format_data(headers, data, context=None):
