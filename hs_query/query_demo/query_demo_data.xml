@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<data>
+
+		<record id="statement_query_demo_report" model="hs.query.statement">
+			<field name="name">query_demo_report</field>
+			<!--对应wizard_name-->
+			<field name="wizard_name">query.demo.report.wizard</field>
+			<!--对应wizard里面 _statement_code-->
+			<field name="code">query_demo_report</field>
+			<field name="type">sql</field>
+			<field name="note">query_demo_report</field>
+			<!--sql语句-->
+			<field name="statement">
+				<![CDATA[
+
+ SELECT * from res_partner
+
+				]]>
+			</field>
+		</record>
+
+		<!--输出信息-->
+        <record id="statement_query_demo_report_o01" model="hs.query.statement.output">
+			<field name="name">名称</field>
+			<field name="alias">name</field>
+			<field name="sequence">10</field>
+			<field name="statement_id" ref="statement_query_demo_report"/>
+		</record>
+
+        <record id="statement_query_demo_report_o02" model="hs.query.statement.output">
+			<field name="name">email</field>
+			<field name="alias">email</field>
+			<field name="sequence">20</field>
+			<field name="statement_id" ref="statement_query_demo_report"/>
+		</record>
+
+        <record id="statement_query_demo_report_o03" model="hs.query.statement.output">
+			<field name="name">phone</field>
+			<field name="alias">phone</field>
+			<field name="sequence">30</field>
+			<field name="statement_id" ref="statement_query_demo_report"/>
+		</record>
+
+	</data>
+
+</odoo>

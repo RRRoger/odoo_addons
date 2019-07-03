@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="query_demo_report_wizard_form" model="ir.ui.view">
+        <field name="name">query.demo.report.wizard</field>
+        <field name="model">query.demo.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <footer>
+                    <button name='confirm' class="oe_highlight" type='object' string='Confirm'/>
+                    <button name='download' class="oe_highlight" type='object' string='Download'/>
+                    <button string="取消" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="query_demo_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">query.demo.report.wizard</field>
+        <field name="res_model">query.demo.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
