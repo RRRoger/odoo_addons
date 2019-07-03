@@ -69,6 +69,34 @@ class QueryStatement(models.Model):
             query.write({'record_ids': [(0, 0, {'user_id': user_id})]})
         return True
 
+    def jump2page(self):
+        """
+            开始datatables展示
+        :return:
+        """
+        self.ensure_one()
+        wizard_parent = self.env['query.select.wizard.parent']
+        condition_and_desc = wizard_parent.get_query_condition_and_desc()
+        query_condition = condition_and_desc.get('query_condition', {})
+        condition_desc = condition_and_desc.get('condition_desc', '')
+        wizard_parent.validate_condition_for_query(query_condition)
+
+        # 返回结果
+        res = {
+            'type': 'ir.actions.client',
+            'tag': "hs_query.sys_query_report",
+            'context': {
+                '_uid': self._uid,
+                '_statement_code': self.code,
+            },
+        }
+
+        wizard_parent.create_cache(query_condition, condition_desc)
+        res['context'].update(query_condition)
+        res['context'].update({'condition_desc': condition_desc})
+
+        self.env['hs.query.statement'].create_query_record(self.code, self._uid)
+        return res
 
 class QueryStatementOutput(models.Model):
 

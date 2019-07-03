@@ -33,10 +33,9 @@ class QueryAdapter(models.TransientModel):
         page = request.jsonrequest['page']  # 页码
         page_size = request.jsonrequest['pagesize']  # 每页显示数量
 
-        sql = request.env[wizard_name].format_sql_by_condition(sql, query_condition)
-
         # try_catch
         try:
+            sql = request.env[wizard_name].format_sql_by_condition(sql, query_condition)
             data = query_and_count_data(self.env, sql, page, page_size, query.get_columns())
         except Exception, e:
             data = {'error': 1, 'msg': ERROR_SQL_QUERY % str(e)}

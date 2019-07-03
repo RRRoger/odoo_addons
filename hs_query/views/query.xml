@@ -5,6 +5,9 @@
             <field name="model">hs.query.statement</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="jump2page" string="开始查询" type="object" class="oe_highlight"/>
+                    </header>
                     <sheet>
                         <group>
                             <group>
