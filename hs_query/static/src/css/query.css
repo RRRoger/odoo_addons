@@ -1,0 +1,40 @@
+/* 本模块自定义css 写在这里 */
+
+.column-bold{font-weight:bold;}
+
+.condition_desc_title{
+    font-weight:bold;
+}
+
+.condition_desc{
+    font-weight:bold;
+    margin-left:16px;
+}
+
+.desc {
+    font-size:20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    display: inline-block;
+    color: #777777;
+    padding-top: 10px;
+    padding-right: 16px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    background-color: #f0eeee;
+}
+
+.div-hr {
+    border-bottom: 1px solid #a8a8a8;
+}
+
+.content {
+    padding: 15px;
+    margin-top: 0;
+    margin-left: 30px;
+    color: #777777;
+    max-width: 700px;
+    font-size: 16px;
+}

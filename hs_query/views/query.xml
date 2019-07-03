@@ -1,0 +1,115 @@
+<odoo>
+    <data>
+        <record id="hs_query_statement_view_form" model="ir.ui.view">
+            <field name="name">数据库查询</field>
+            <field name="model">hs.query.statement</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="code" required="1"/>
+                                <field name="type" required="1"/>
+                                <field name="sequence" required="1"/>
+                                <field name="wizard_name" required="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                        <notebook>
+                            <page string="语句">
+                                <field name="statement" required="1"/>
+                            </page>
+                            <page string="输出信息">
+                                <field name="output_ids" mode="tree">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name" required="1"/>
+                                        <field name="alias" required="1"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="查询记录">
+                                <field name="record_ids" mode="tree" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="下载记录">
+                                <field name="download_ids" mode="tree" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="file" filename="file_name"/>
+                                        <field name="file_name" invisible="1"/>
+                                        <field name="create_uid"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hs_query_statement_view_tree" model="ir.ui.view">
+            <field name="name">数据库查询</field>
+            <field name="model">hs.query.statement</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="type"/>
+                    <field name="wizard_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hs_query_statement_search_view" model="ir.ui.view">
+            <field name="model">hs.query.statement</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="type"/>
+                    <field name="wizard_name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hs_query_statement_action_window" model="ir.actions.act_window">
+            <field name="name">数据库查询</field>
+            <field name="res_model">hs.query.statement</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hs_query_statement_search_view"/>
+        </record>
+
+        <record id="hs_query_download_file_view_form" model="ir.ui.view">
+            <field name="name">文件下载</field>
+            <field name="model">hs.query.download.file</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="file" filename="file_name" readonly="1"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <span/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

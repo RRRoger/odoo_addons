@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+
+        <menuitem id="hs_data_analysis_root_menu" name="数据分析" sequence="2"/>
+
+            <menuitem id="hs_data_analysis_homepage_menu" name="主页"
+                      sequence="-1" action="query_homepage_action"
+                      groups="hs_query.group_data_analysis_manager,hs_query.group_data_analysis_user"
+                      parent="hs_data_analysis_root_menu"/>
+
+            <menuitem id="hs_data_analysis_config_menu" name="数据分析配置" sequence="100" parent="hs_data_analysis_root_menu"/>
+
+                <menuitem id="hs_data_analysis_query_menu" name="数据库查询"
+                          groups="base.group_system"
+                          parent="hs_data_analysis_config_menu"
+                          action="hs_query_statement_action_window" sequence="10"/>
+
+                <menuitem id="hs_query_input_cache_menu" name="查询条件缓存"
+                          groups="base.group_system"
+                          parent="hs_data_analysis_config_menu"
+                          action="hs_query_input_cache_action_window" sequence="20"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<% extends 'base.html' %>
+<% block title %>主页<% endblock %>
+
+<% block body %>
+
+<div class="condition_desc_title">查询条件</div>
+<div id="condition_desc" class="condition_desc"></div>
+<br/>
+<table id="example" class="display"/>
+
+<script>
+var columns = ${columns|safe};
+</script>
+<script type="text/javascript" src="/hs_query/static/src/js/query_main.js"></script>
+<% endblock %>
+

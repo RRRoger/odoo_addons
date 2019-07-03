@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record id="hs_query_input_cache_view_form" model="ir.ui.view">
+            <field name="name">查询条件缓存</field>
+            <field name="model">hs.query.input.cache</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="statement_code"/>
+                                <field name="query_condition"/>
+                                <field name="condition_desc"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hs_query_input_cache_view_tree" model="ir.ui.view">
+            <field name="name">查询条件缓存</field>
+            <field name="model">hs.query.input.cache</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0">
+                    <field name="user_id"/>
+                    <field name="statement_code"/>
+                    <field name="query_condition"/>
+                    <field name="condition_desc"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hs_query_input_cache_search_view" model="ir.ui.view">
+            <field name="model">hs.query.input.cache</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="user_id"/>
+                    <field name="statement_code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hs_query_input_cache_action_window" model="ir.actions.act_window">
+            <field name="name">查询条件缓存</field>
+            <field name="res_model">hs.query.input.cache</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hs_query_input_cache_search_view"/>
+        </record>
+
+    </data>
+</odoo>
