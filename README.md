@@ -16,4 +16,3 @@
 ## 1. tools
 
 #### (1). [xml rpc tools](odoo_xmlrpc)
-
