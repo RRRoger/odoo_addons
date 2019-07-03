@@ -66,11 +66,16 @@ WHERE user_id = %s and statement_code = '%s';
 
     @api.multi
     def confirm(self):
-
         """
             开始datatables展示
         :return:
         """
+        self.ensure_one()
+        return self._confirm()
+
+    @api.multi
+    def _confirm(self, statement_code=None):
+        statement_code = statement_code if statement_code else self._statement_code
 
         condition_and_desc = self.get_query_condition_and_desc()
         query_condition = condition_and_desc.get('query_condition', {})
@@ -83,7 +88,7 @@ WHERE user_id = %s and statement_code = '%s';
             'tag': TAG,
             'context': {
                 '_uid': self._uid,
-                '_statement_code': self._statement_code,
+                '_statement_code': statement_code,
             },
         }
 
@@ -91,7 +96,7 @@ WHERE user_id = %s and statement_code = '%s';
         res['context'].update(query_condition)
         res['context'].update({'condition_desc': condition_desc})
 
-        self.env['hs.query.statement'].create_query_record(self._statement_code, self._uid)
+        self.env['hs.query.statement'].create_query_record(statement_code, self._uid)
         return res
 
     @api.multi
@@ -100,9 +105,15 @@ WHERE user_id = %s and statement_code = '%s';
             下载excel
         :return:
         """
-        query = get_query_statement_by_code(self.env, self._statement_code)
+        self.ensure_one()
+        return self._download()
+
+    def _download(self, statement_code=None):
+        statement_code = statement_code if statement_code else self._statement_code
+
+        query = get_query_statement_by_code(self.env, statement_code)
         if not query:
-            raise UserError(u"数据库查询代码[ %s ]不存在, 请联系管理员!!" % self._statement_code)
+            raise UserError(u"数据库查询代码[ %s ]不存在, 请联系管理员!!" % statement_code)
 
         sql = query.statement or ""
 
@@ -119,7 +130,10 @@ WHERE user_id = %s and statement_code = '%s';
         columns = query.get_columns()
 
         # 执行sql
-        res_data = query_data(self.env, final_sql, None, None, columns, return_dict=1)
+        try:
+            res_data = query_data(self.env, final_sql, None, None, columns, return_dict=1)
+        except Exception, e:
+            raise UserError(u"查询出错: \n\n %s" % str(e))
 
         # 格式化excel需要的数据
         excel_data = excel_adapter.format_data(columns, res_data)

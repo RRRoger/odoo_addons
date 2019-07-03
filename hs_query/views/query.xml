@@ -7,6 +7,7 @@
                 <form>
                     <header>
                         <button name="jump2page" string="开始查询" type="object" class="oe_highlight"/>
+                        <button name="download_data" string="下载查询结果" type="object" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>

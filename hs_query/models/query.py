@@ -16,10 +16,12 @@ class QueryStatement(models.Model):
     _name = "hs.query.statement"
     _order = "sequence, id"
 
+    # alter table hs_query_statement drop constraint hs_query_statement_unique_statement_wizard_name ;
+    # 删除约束
+
     _sql_constraints = [
         ('unique_statement_code', 'unique(code)', u'代码不能重复'),
         ('unique_statement_name', 'unique(name)', u'名称不能重复'),
-        ('unique_statement_wizard_name', 'unique(wizard_name)', u'向导名称不能重复'),
     ]
 
     name = fields.Char(string=u'名称')
@@ -41,7 +43,7 @@ class QueryStatement(models.Model):
         self.ensure_one()
         default['name'] = self.name + "(copy)"
         default['code'] = self.code + "(copy)"
-        default['wizard_name'] = self.wizard_name + "(copy)"
+        default['wizard_name'] = "query.select.wizard.parent"
         return super(QueryStatement, self).copy(default)
 
     @api.multi
@@ -69,6 +71,7 @@ class QueryStatement(models.Model):
             query.write({'record_ids': [(0, 0, {'user_id': user_id})]})
         return True
 
+    @api.multi
     def jump2page(self):
         """
             开始datatables展示
@@ -76,27 +79,14 @@ class QueryStatement(models.Model):
         """
         self.ensure_one()
         wizard_parent = self.env['query.select.wizard.parent']
-        condition_and_desc = wizard_parent.get_query_condition_and_desc()
-        query_condition = condition_and_desc.get('query_condition', {})
-        condition_desc = condition_and_desc.get('condition_desc', '')
-        wizard_parent.validate_condition_for_query(query_condition)
+        return wizard_parent._confirm(self.code)
 
-        # 返回结果
-        res = {
-            'type': 'ir.actions.client',
-            'tag': "hs_query.sys_query_report",
-            'context': {
-                '_uid': self._uid,
-                '_statement_code': self.code,
-            },
-        }
+    @api.multi
+    def download_data(self):
+        self.ensure_one()
+        wizard_parent = self.env['query.select.wizard.parent']
+        return wizard_parent._download(self.code)
 
-        wizard_parent.create_cache(query_condition, condition_desc)
-        res['context'].update(query_condition)
-        res['context'].update({'condition_desc': condition_desc})
-
-        self.env['hs.query.statement'].create_query_record(self.code, self._uid)
-        return res
 
 class QueryStatementOutput(models.Model):
 
