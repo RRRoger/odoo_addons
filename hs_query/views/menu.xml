@@ -24,12 +24,5 @@
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_input_cache_action_window" sequence="20"/>
 
-            <!--Demo-->
-            <menuitem id="hs_query_demo_menu" name="Demo" sequence="100" parent="hs_data_analysis_root_menu"/>
-
-                <menuitem id="hs_query_demo_report_wizard_action_menu" name="Query Demo"
-                      parent="hs_query_demo_menu"
-                      groups="base.group_system"
-                      action="query_demo_report_wizard_action" sequence="10"/>
     </data>
 </odoo>

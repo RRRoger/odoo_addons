@@ -5,9 +5,6 @@ from odoo.http import request
 from odoo.addons.hs_query.libs.query_libs import query_and_count_data, get_query_statement_by_code
 import json
 
-ERROR_NO_STATEMENT_CODE = u"数据库查询代码[ %s ]不存在, 请联系管理员!!"
-ERROR_SQL_QUERY = u"数据库查询异常, 请联系管理员!!<br/><br/> %s"
-
 
 class QueryAdapter(models.TransientModel):
 
@@ -24,7 +21,7 @@ class QueryAdapter(models.TransientModel):
         if not query:
             return {
                 'error': 1,
-                'msg': ERROR_NO_STATEMENT_CODE % _statement_code,
+                'msg': u"数据库查询代码[ %s ]不存在, 请联系管理员!!" % _statement_code,
             }
 
         sql = query.statement or ''
@@ -39,6 +36,6 @@ class QueryAdapter(models.TransientModel):
         try:
             data = query_and_count_data(self.env, sql, page, page_size, query.get_columns())
         except Exception, e:
-            data = {'error': 1, 'msg': ERROR_SQL_QUERY % str(e)}
+            data = {'error': 1, 'msg': str(e)}
 
         return data
