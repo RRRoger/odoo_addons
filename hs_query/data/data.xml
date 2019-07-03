@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <record id="query_cron_delete_expired_download_file" model="ir.cron">
+            <field name="name">[Query]删除失效的文件</field>
+            <field name="model">hs.query.download.file</field>
+            <field name="function">delete_expired_file</field>
+            <field name="interval_type">days</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="numbercall" eval="-1"/>
+            <field name="priority" eval="5"/>
+            <field name="doall" eval="1"/>
+            <field name="active" eval="0"/>
+            <field name="interval_number" eval="1"/>
+            <field name="nextcall" eval="(DateTime.now()).strftime('%Y-%m-%d 16:01:00')"/>
+        </record>
+
+    </data>
+
+</odoo>

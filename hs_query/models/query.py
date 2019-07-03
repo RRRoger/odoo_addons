@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, api, _, fields
+import datetime
+import logging
+
+_logger = logging.getLogger(__name__)
 
 TYPE_SELECTION = [
     ('sql', u'普通SQL查询',)
@@ -111,3 +115,10 @@ class QueryDownloadFile(models.Model):
     user_id = fields.Many2one('res.users', string=u"用户")
     file = fields.Binary(string=u"下载文件", attachment=True)
     file_name = fields.Char(u'文件名')
+
+    def delete_expired_file(self, days=7):
+        _logger.info("[Query] Start to delete expired files ~~")
+        now = datetime.datetime.now() + datetime.timedelta(days=-days)
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.search([('create_date', '<', now)]).unlink()
+        return True

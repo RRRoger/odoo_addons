@@ -21,6 +21,8 @@
         'views/query_input_cache.xml',
         'views/menu.xml',
 
+        'data/data.xml',
+
         # 'data/data.xml',
         'security/ir.model.access.csv',
     ],

@@ -4,11 +4,13 @@
 
 .condition_desc_title{
     font-weight:bold;
+    font-size:14px;
 }
 
 .condition_desc{
     font-weight:bold;
     margin-left:16px;
+    font-size:14px;
 }
 
 .desc {
