@@ -1,4 +1,5 @@
 # 消息发布日志
+> 作者: [http://www.vauxoo.com](http://www.vauxoo.com)
 
 ### [英文文档](README_EN.rst)
 
@@ -30,5 +31,3 @@
 - 在某些情况下，您需要排除没有直接的字段 主模型的关系（订单行中的数量）和这些不相关排除字段中的出现（many2many with domain）。对于这些领域存在的 “排除外部字段”，您可以在其中单独指定此字段，用`,`分隔，他们之间没有空格
 
 - 此外，如果您需要它，还有一个名为message_post_test的测试模块 证明功能.
-
-> 作者: [http://www.vauxoo.com](http://www.vauxoo.com)
