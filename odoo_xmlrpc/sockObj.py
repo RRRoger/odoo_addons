@@ -1,10 +1,19 @@
 # -*- encoding: utf-8 -*-
 
-import string, os, sys, xmlrpclib, datetime, json, xlrd, re, ssl ,requests, ConfigParser
+import string
+import os
+import sys
+import xmlrpclib
+import datetime
+import json
+import xlrd
+import re
+import ssl
+import requests
+import ConfigParser
 
 # import 上级目录
 sys.path.append("..")
-
 from log import SUCCESS, ERROR, WARNING, _log
 
 reload(sys)
