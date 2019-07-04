@@ -5,21 +5,28 @@
             <field name="name">db_statement.form</field>
             <field name="model">db.statement</field>
             <field name="arch" type="xml">
-                <form string="数据库操作" version="7.0" groups="base.group_no_one">
+                <form string="数据库操作" delete="0">
                     <header>
                         <button name="button_execute_sql" string="执行sql语句" type="object" groups="base.group_no_one"/>
+                        <button name="%(db_statement.act_send_mail_wizard)d" string="发送邮件" type="action" groups="base.group_no_one"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
                         <group>
                             <group>
                                 <field name="name" required="1"/>
-                                <field name="csv_name" invisible="1"/>
+                                <field name="excel_file_name" invisible="1"/>
+                                <field name="active"/>
                             </group>
                             <group/>
                         </group>
                         <group>
                             <field name="sql" required="1"/>
-                            <field name="csv" filename="csv_name" readonly="1" attrs="{'invisible':[('csv', '=', False)]}"/>
+                            <field name="excel_file" filename="excel_file_name" readonly="1" attrs="{'invisible':[('excel_file', '=', False)]}"/>
                             <field name="result" readonly="1"/>
                         </group>
                     </sheet>
@@ -32,13 +39,25 @@
             <field name="name">db_statement.tree</field>
             <field name="model">db.statement</field>
             <field name="arch" type="xml">
-                <tree string="数据库操作">
+                <tree string="数据库操作" delete="0">
                     <field name="name"/>
                     <field name="brief_result"/>
+                    <field name="active"/>
                 </tree>
             </field>
         </record>
 
+        <record id="db_statement_search" model="ir.ui.view">
+            <field name="name">db.statement.search</field>
+            <field name="model">db.statement</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <filter string='有效' name='is_active' domain="[('active', '=', True)]"/>
+                    <filter string='归档' name='is_inactive' domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
 
         <record id="db_statement_action" model="ir.actions.act_window">
             <field name="name">数据库操作</field>
@@ -47,6 +66,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="db_statement_tree"/>
+            <field name="search_view_id" ref="db_statement_search"/>
         </record>
 
 

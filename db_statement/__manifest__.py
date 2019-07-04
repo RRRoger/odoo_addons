@@ -13,6 +13,7 @@ DB STATEMENT
 可用于临时查询数据 & 紧急修复数据库.
         """,
     'data': [
+        'send_mail_wizard.xml',
         'db_statement.xml',
         'security/ir.model.access.csv',
     ],
