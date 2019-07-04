@@ -1,14 +1,20 @@
 # coding: utf-8
 
 try:
-    from openpyxl import Workbook
+    import openpyxl
 except ImportError:
-    Workbook = None
+    openpyxl = None
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 try:
     import xlwt
 except ImportError:
     xlwt = None
+
 from cStringIO import StringIO
 import os
 
@@ -18,7 +24,7 @@ def save_excel(name, excel_data, full_dir, sheet2name=None, sheet2data=None):
         在本地生成excel临时文件, 返回路径待上传
         sheet2name & sheet2data 用来记录报表查询的条件
     """
-    wb = Workbook()
+    wb = openpyxl.Workbook()
     # 激活 worksheet
     ws = wb.active
     ws.title = name
@@ -35,12 +41,12 @@ def save_excel(name, excel_data, full_dir, sheet2name=None, sheet2data=None):
     return path
 
 
-def _excel_data_getter_for_xlsx(name, excel_data, sheet2name=None, sheet2data=None):
+def _excel_data_getter_for_openpyxl(name, excel_data, sheet2name=None, sheet2data=None):
     """
         在本地生成excel临时文件, 返回路径待上传
         sheet2name & sheet2data 用来记录报表查询的条件
     """
-    wb = Workbook()
+    wb = openpyxl.Workbook()
     # 激活 worksheet
     ws = wb.active
     ws.title = name
@@ -61,7 +67,41 @@ def _excel_data_getter_for_xlsx(name, excel_data, sheet2name=None, sheet2data=No
     return data
 
 
-def _excel_data_getter_for_xls(name, excel_data, sheet2name=None, sheet2data=None):
+def _excel_data_getter_for_xlsxwriter(name, excel_data, sheet2name=None, sheet2data=None):
+    """
+        在本地生成excel临时文件, 返回路径待上传
+        sheet2name & sheet2data 用来记录报表查询的条件
+    """
+
+    title_dict = {'font_name': u'微软雅黑', 'font_size': 12, 'align': 'centre', 'bg_color': "#C8C8C8"}
+    row_dict = {'font_name': u'微软雅黑', 'font_size': 10}
+
+    xls = StringIO()
+    wb = xlsxwriter.Workbook(xls)
+    worksheet = wb.add_worksheet(name)
+    title_style = wb.add_format(title_dict)
+    row_style = wb.add_format(row_dict)
+    _row = 0
+    for r in excel_data:
+        worksheet.write_row(_row, 0, r, title_style if _row == 0 else row_style)
+        _row += 1
+
+    if sheet2data:
+        worksheet2 = wb.add_worksheet(sheet2name)
+        title_style = wb.add_format(title_dict)
+        title_style.set_border(1)
+        _row = 0
+        for r in excel_data:
+            worksheet2.write_row(_row, 0, r, title_style if _row == 0 else row_style)
+            _row += 1
+
+    wb.close()
+    xls.seek(0)
+    data = xls.getvalue()
+    return data
+
+
+def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=None):
     """
         在本地生成excel临时文件, 返回路径待上传
         sheet2name & sheet2data 用来记录报表查询的条件
@@ -168,12 +208,6 @@ def _excel_data_getter_for_xls(name, excel_data, sheet2name=None, sheet2data=Non
     return data
 
 
-if None:
-    excel_data_getter = _excel_data_getter_for_xlsx
-else:
-    excel_data_getter = _excel_data_getter_for_xls
-
-
 def format_data(headers, data, context=None):
     """
         格式化生成excel所需要的数据格式
@@ -227,3 +261,12 @@ def remove_file(full_path):
     # 删除文件 临时文件
     os.remove(full_path)
     return True
+
+
+excel_data_getter = _excel_data_getter_for_xlsxwriter
+
+
+# for lib in LIB_LIST:
+#     if eval(lib):
+#         excel_data_getter = eval("_excel_data_getter_for_" + lib)
+#         break
