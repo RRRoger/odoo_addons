@@ -15,7 +15,9 @@ function alert_msg(...args) {
 
 // datatables 中文翻译
 var language = {
-    "sProcessing":   "处理中...",
+    //这里很重要，如果你的加载中是文字，则直接写上文字即可，如果是gif的图片，使用img标签就可以加载,
+    "sProcessing":   "<img src='/hs_query/static/description/loading-icon.gif'>",
+
     "sLengthMenu":   "显示结果数目 _MENU_",
     "sZeroRecords":  "没有匹配结果",
     "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",

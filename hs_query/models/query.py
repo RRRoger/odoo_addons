@@ -32,7 +32,7 @@ class QueryStatement(models.Model):
     note = fields.Text(string=u'说明')
 
     statement = fields.Text(string=u'语句')
-    wizard_name = fields.Char(string=u'向导名称')
+    wizard_name = fields.Char(string=u'向导名称', default='query.select.wizard.parent')
 
     output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string=u'查询输出', copy=True)
     record_ids = fields.One2many('hs.query.record', 'statement_id', string=u'查询记录', copy=False)

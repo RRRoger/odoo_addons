@@ -36,6 +36,8 @@ $(function(){
             aLengthMenu: aLengthMenu,                //展示100行
             bLengthChange: false,                    //不显示行选项
 
+            bProcessing : true,                      //必须加上这个才能显示加载中的效果
+
             // 分页开始
             retrieve: true,
             paging: true,
