@@ -91,7 +91,7 @@ def _excel_data_getter_for_xlsxwriter(name, excel_data, sheet2name=None, sheet2d
         title_style = wb.add_format(title_dict)
         title_style.set_border(1)
         _row = 0
-        for r in excel_data:
+        for r in sheet2data:
             worksheet2.write_row(_row, 0, r, title_style if _row == 0 else row_style)
             _row += 1
 

@@ -64,6 +64,9 @@ WHERE user_id = %s and statement_code = '%s';
 
         return True
 
+    def format_condition_desc_for_excel(self):
+        return []
+
     @api.multi
     def confirm(self):
         """
@@ -143,7 +146,7 @@ WHERE user_id = %s and statement_code = '%s';
         xls_name = u'%s(%s).xlsx' % (query.name, now.strftime('%Y%m%d%H%M%S'))
 
         # 生成excel所需要的数据
-        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data)
+        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data, u'查询条件', self.format_condition_desc_for_excel())
 
         # 调用创建下载
         download_file_id = self.create_download_file(xls_name, base_data, query.id)
