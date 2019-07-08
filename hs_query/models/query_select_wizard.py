@@ -65,6 +65,11 @@ WHERE user_id = %s and statement_code = '%s';
         return True
 
     def format_condition_desc_for_excel(self):
+        """
+            excel展示查询条件
+            需要返回一个二维数组
+        :return:
+        """
         return []
 
     @api.multi
