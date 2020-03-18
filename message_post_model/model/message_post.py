@@ -370,6 +370,6 @@ class IrModel(models.Model):
             env = api.Environment(cr, SUPERUSER_ID, {})
             models_obj = env['ir.model'].search([('tracked', '=', True)])
             for record in models_obj:
-                obj = env[record.model]
-                obj._patch_method('write', self.write_track_all())
+                obj = env.get(record.model)
+                if obj: obj._patch_method('write', self.write_track_all())
         return super(IrModel, self)._register_hook()
