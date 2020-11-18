@@ -16,4 +16,4 @@
 
 
 
-### 2. Look at the demo script
+### 2. See the demo script
