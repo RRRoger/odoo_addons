@@ -19,7 +19,7 @@ odoo.define('roger.tree_buttons_action', function (require) {
 
         var self = this;
         var model_name = this.model;
-        console.log(model_name);
+
         var res= false;
         new Model(model_name).call(bt[0], [this.model], {
             context: this.dataset.context,
@@ -29,7 +29,10 @@ odoo.define('roger.tree_buttons_action', function (require) {
 
             //处理后台返回的data
             if(isJson(data)){
-                web_client.action_manager.do_action(data);
+                // 如果出现 'type' 相关的前端报错
+                // 此处填坑
+                // 请确认你的data里是否含有  ` 'views': [(view_id, 'form')] `
+                return web_client.action_manager.do_action(data);
             }
         });
         return res;

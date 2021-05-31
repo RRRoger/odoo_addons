@@ -51,8 +51,11 @@ class TvbAdapter(models.AbstractModel):
         for button in buttons:
             zh, en = button[1].split(delimiter)
             button[1] = zh if self._context.get('lang') == 'zh_CN' else en
-            if len(button) > 2 and self.check_user_groups(button[2]):
-                res.append(button)
-            else:
+            # 该代码并不能根据权限组隐藏tree上的按钮，因此注释掉了并重写
+            # if len(button) > 2 and self.check_user_groups(button[2]):
+            #     res.append(button)
+            # else:
+            #     res.append(button)
+            if len(button) > 2 and self.user_has_groups(button[2] or 'base.group_user'):
                 res.append(button)
         return res
