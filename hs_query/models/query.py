@@ -25,9 +25,9 @@ class QueryStatement(models.Model):
     ]
 
     name = fields.Char(string=u'名称')
-    code = fields.Char(string=u'代码')
+    code = fields.Char(string=u'代码', help=u"全局唯一, 用于代码中识别!")
     active = fields.Boolean(string=u'有效', default=True)
-    type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql')
+    type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql', help=u"目前只有SQL,其他类型待开发!")
     sequence = fields.Integer(string=u'顺序', default=10)
     note = fields.Text(string=u'说明')
 
@@ -97,11 +97,15 @@ class QueryStatementOutput(models.Model):
         ('unique_statement_id_name', 'unique(statement_id, name)', u'名称不能重复'),
     ]
 
-    name = fields.Char(string=u'名称')
+    name = fields.Char(string=u'输出字段名', help=u"在Excel或者界面上的显示")
     statement_id = fields.Many2one("hs.query.statement", string=u"数据库查询")
     sequence = fields.Integer(string=u'顺序', default=10)
-    alias = fields.Char(string=u'别名')
+    alias = fields.Char(string=u'别名', help=u"SQL查询出来的列名")
     note = fields.Text(string=u'说明')
+
+    @api.onchange('alias')
+    def _onchange_alias(self):
+        self.name = self.alias
 
 
 class QueryInputCache(models.Model):

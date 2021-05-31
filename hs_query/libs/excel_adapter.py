@@ -73,8 +73,8 @@ def _excel_data_getter_for_xlsxwriter(name, excel_data, sheet2name=None, sheet2d
         sheet2name & sheet2data 用来记录报表查询的条件
     """
 
-    title_dict = {'font_name': u'微软雅黑', 'font_size': 12, 'align': 'centre', 'bg_color': "#C8C8C8"}
-    row_dict = {'font_name': u'微软雅黑', 'font_size': 10}
+    title_dict = {'font_name': u'Source Han Sans CN', 'font_size': 12, 'align': 'centre', 'bg_color': "#C8C8C8"}
+    row_dict = {'font_name': u'Source Han Sans CN', 'font_size': 10}
 
     xls = StringIO()
     wb = xlsxwriter.Workbook(xls)
@@ -110,10 +110,10 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     worksheet = workbook.add_sheet(name)
 
     # header style
-    header_style = xlwt.easyxf('pattern: pattern solid;')
+    header_style = xlwt.easyxf('pattern: pattern solid;font: name Source Han Sans CN;')
 
     header_font = xlwt.Font()
-    header_font.name = u'微软雅黑'  # 指定“微软雅黑”
+    header_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
     header_font.height = 200
     header_style.font = header_font
 
@@ -127,7 +127,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     normal_style = xlwt.XFStyle()
 
     normal_font = xlwt.Font()
-    normal_font.name = u'微软雅黑'  # 指定“微软雅黑”
+    normal_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
     normal_font.height = 200
 
     normal_style.font = normal_font
@@ -136,7 +136,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     group_style = xlwt.XFStyle()  # xlwt.easyxf('pattern: pattern solid;')
 
     group_font = xlwt.Font()
-    group_font.name = u'微软雅黑'  # 指定“微软雅黑”
+    group_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
     group_font.height = 200  # 字体大小
     # group_font.colour_index = 0x0C
     # group_font.bold = True

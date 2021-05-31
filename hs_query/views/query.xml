@@ -6,8 +6,10 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="jump2page" string="开始查询" type="object" class="oe_highlight" groups="base.group_system"/>
-                        <button name="download_data" string="下载查询结果" type="object" class="oe_highlight" groups="base.group_system"/>
+                        <button name="jump2page" string="开始查询" type="object" class="oe_highlight"
+                                groups="base.group_system,hs_query.group_data_analysis_user"/>
+                        <button name="download_data" string="下载查询结果" type="object" class="oe_highlight"
+                                groups="base.group_system,hs_query.group_data_analysis_user"/>
                     </header>
                     <sheet>
                         <group>
@@ -32,8 +34,8 @@
                                 <field name="output_ids" mode="tree">
                                     <tree editable="bottom">
                                         <field name="sequence" widget="handle"/>
-                                        <field name="name" required="1"/>
                                         <field name="alias" required="1"/>
+                                        <field name="name" required="1"/>
                                         <field name="note"/>
                                     </tree>
                                 </field>
@@ -68,6 +70,10 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="sequence" widget="handle"/>
+                    <button name="jump2page" string="开始查询" type="object" class="oe_highlight"
+                            groups="base.group_system,hs_query.group_data_analysis_user"/>
+                    <button name="download_data" string="下载查询结果" type="object" class="oe_highlight"
+                            groups="base.group_system,hs_query.group_data_analysis_user"/>
                     <field name="name"/>
                     <field name="code"/>
                     <field name="type"/>

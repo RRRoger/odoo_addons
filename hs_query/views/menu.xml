@@ -15,12 +15,12 @@
 
                 <!--lv3 menu-->
                 <menuitem id="hs_data_analysis_query_menu" name="数据库查询"
-                          groups="base.group_system"
+                          groups="base.group_system,hs_query.group_data_analysis_manager"
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_statement_action_window" sequence="10"/>
 
                 <menuitem id="hs_query_input_cache_menu" name="查询条件缓存"
-                          groups="base.group_system"
+                          groups="base.group_system,hs_query.group_data_analysis_manager"
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_input_cache_action_window" sequence="20"/>
 
