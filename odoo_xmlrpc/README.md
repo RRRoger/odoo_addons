@@ -9,7 +9,7 @@
 ;DB               数据库名称 / your database's name
 ;USERNAME         用户名信息 / your login account
 ;USERPASS         用户名密码 / your login password
-;HOST             ip / 域名(domain) like: `erp2.hesaitech.com` || `172.31.0.30`, 不带`http(s)://`
+;HOST             ip / 域名(domain) like: `erp2.xxx.com` || `172.31.0.30`, 不带`http(s)://`
 ;PORT             端口 / port
 ;HTTPS            是否是https类型的, 只有填`1`才有效 / when your env is https, just set it `1`
 ```
