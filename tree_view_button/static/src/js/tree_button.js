@@ -32,6 +32,10 @@ odoo.define('roger.tree_buttons_action', function (require) {
                 // 如果出现 'type' 相关的前端报错
                 // 此处填坑
                 // 请确认你的data里是否含有  ` 'views': [(view_id, 'form')] `
+
+                // FIX: 数据更新后自动加载加载
+                web_client.action_manager.inner_widget.active_view.controller.reload();
+                
                 return web_client.action_manager.do_action(data);
             }
         });
