@@ -8,7 +8,7 @@ $(function(){
 
     var data_url = '/query/data';
     $('#condition_desc').html(context.condition_desc);
-    var aLengthMenu = [50, 100, 200];
+    var aLengthMenu = [30, 50, 100, 200];
     var pageLength = 100;
 
     var t = $(document).ready(function(){

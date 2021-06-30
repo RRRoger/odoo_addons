@@ -103,10 +103,6 @@ class QueryStatementOutput(models.Model):
     alias = fields.Char(string=u'别名', help=u"SQL查询出来的列名")
     note = fields.Text(string=u'说明')
 
-    @api.onchange('alias')
-    def _onchange_alias(self):
-        self.name = self.alias
-
 
 class QueryInputCache(models.Model):
 
