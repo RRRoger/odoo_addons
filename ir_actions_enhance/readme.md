@@ -1,6 +1,6 @@
 # ir_actions增强
 
-![](static/description/icon.png)
+<img src="static/description/icon.png" width="150" height="auto"/>
 
 ### 1. model `ir.actions.server` add json_dumps function
 
