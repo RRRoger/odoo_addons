@@ -9,19 +9,21 @@
 ## 1. Odoo addons / odoo插件
 
 - [tree_view_button](tree_view_button)
-    - tree视图自定义添加按钮
+  - tree视图自定义添加按钮
 
 - [db_statement ](db_statement)
-
   - 数据库操作
-- [message_post_model](message_post_model)
-- 消息日志跟踪增强
-- [rowno_in_tree](rowno_in_tree)
-- Row Number in tree/list view
-- [hs_query](hs_query)
-- 数据报表分析
-- [ir_actions_enhance](ir_actions_enhance)
 
+- [message_post_model](message_post_model)
+  - 消息日志跟踪增强
+
+- [rowno_in_tree](rowno_in_tree)
+  - Row Number in tree/list view
+
+- [hs_query](hs_query)
+  - 数据报表分析
+
+- [ir_actions_enhance](ir_actions_enhance)
   - ir_actions增强
     - `ir.actions.server`添加json_dumps函数
 
