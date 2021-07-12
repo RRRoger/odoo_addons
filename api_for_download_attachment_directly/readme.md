@@ -32,11 +32,13 @@ af = attachment_factory_obj.create({
     "note": note,
 })
 
-# file url
-# like: http://localhost:8069/web/download/attachment/1babc64e-6e99-4934-bc84-28263a0fdd88
+# you will get a file_url and a filename
+
+# file url like: http://localhost:8069/web/download/attachment/1babc64e-6e99-4934-bc84-28263a0fdd88
+# Open your browser with this URL and download it directly
 file_url = af.url
 
-# file name
+# file name like: xxx.jpg
 filename = af.filename
 ```
 
