@@ -1,10 +1,12 @@
-# Api For Downloading Attachment Directly Without Login Odoo
+# api_for_download_attachment_directly
+
+> 下载附件免登陆 / Download Attachment Without Login Odoo
 
 <div align=center>
   <img src="static/description/icon.png" width="80"/>
 </div>
 
-### 1. 下载附件免登陆 / Download Attachment Without Login Odoo
+### 1. Usage
 
 ```python
 attachment_factory_obj = self.env['attachment.factory']

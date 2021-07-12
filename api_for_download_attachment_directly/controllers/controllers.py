@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from odoo import http, tools
-from odoo.http import request
 from odoo.http import request, content_disposition
 from ..models.attachment_factory import AttachmentFactoryErr
 import base64
@@ -13,7 +12,7 @@ class ApiForDownloadAttachment(http.Controller):
         main_obj = request.env['attachment.factory'].sudo()
         af = main_obj.search([("name", "=", code)], limit=1)
         if not af:
-            return request.render('website.404')
+            raise AttachmentFactoryErr("File data not found.")
         try:
             model = af.model
             res_id = af.res_id
@@ -23,8 +22,6 @@ class ApiForDownloadAttachment(http.Controller):
             this = request.env[model].sudo().browse(res_id)
             file_data = getattr(this, model_field)
             filename = getattr(this, filename_field)
-
-            print(filename)
 
             return request.make_response(base64.b64decode(file_data),
                                          [('Content-Type', 'application/octet-stream'),

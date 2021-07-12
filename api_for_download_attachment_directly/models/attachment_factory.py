@@ -37,8 +37,7 @@ class AttachmentFactory(models.Model):
         try:
             this = self.env[self.model].browse(self.res_id)
             fname = getattr(this, self.filename_field)
-            if not fname:
-                raise AttachmentFactoryErr("Filename not found.")
+            return fname
         except Exception as e:
             raise AttachmentFactoryErr("Filename not found.")
 
