@@ -9,7 +9,7 @@
 ```python
 attachment_factory_obj = self.env['attachment.factory']
 
-# or where your
+# Or when you use api
 # from odoo.http import request
 # attachment_factory_obj = request.env['attachment.factory']
 
