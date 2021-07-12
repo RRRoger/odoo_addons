@@ -2,6 +2,9 @@
 from odoo import models, fields, api
 from odoo.http import request
 from uuid import uuid4
+import logging
+import datetime
+_logger = logging.getLogger(__name__)
 
 
 class AttachmentFactoryErr(Exception):
@@ -54,3 +57,11 @@ class AttachmentFactory(models.Model):
             "base_url": url_root,
             "name": self.name,
         })
+
+    def delete_expired_file(self, days=7):
+        _logger.info("[Api For Download Attachment Directly] Start to delete expired files, days={} ~~".format(days))
+        now = datetime.datetime.now() + datetime.timedelta(days=-days)
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = """ delete from attachment_factory where create_date < '{}'; """.format(now)
+        self._cr.execute(sql)
+        return True

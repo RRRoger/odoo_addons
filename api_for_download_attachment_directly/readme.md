@@ -6,7 +6,7 @@
   <img src="static/description/icon.png" width="80"/>
 </div>
 
-### 1. Usage
+### 1. Usage / 如何使用?
 
 ```python
 attachment_factory_obj = self.env['attachment.factory']
@@ -37,3 +37,13 @@ file_url = attachment_factory.url
 filename = attachment_factory.filename
 ```
 
+### 2. Automatically delete out-of-date data / 删除失效的数据
+
+> api_for_download_attachment_directly/data/data.xml
+
+```xml
+<record id="cron_delete_expired_download_file" model="ir.cron">
+    <field name="name">[api_for_download_attachment_directly] 删除失效的数据</field>
+    ...
+</record>
+```

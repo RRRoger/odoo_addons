@@ -24,6 +24,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/attachment_factory.xml',
+        'data/data.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
