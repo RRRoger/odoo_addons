@@ -8,7 +8,7 @@
 
 ### 1. Usage / 如何使用?
 
-> Download  avatar of the partner whose id is 999 
+> Download the avatar of the partner whose id is 999 
 
 ```python
 # when you use api
@@ -18,14 +18,13 @@ attachment_factory_obj = request.env['attachment.factory']
 # Or Other
 # attachment_factory_obj = self.env['attachment.factory']
 
-# Download  avatar of the partner whose id is 999 
 model = "res.partner"
 res_id = 999
 model_field = "avatar"
 filename_field = "avatar_name"
 note = "download avatar of partner"
 
-attachment_factory = attachment_factory_obj.create({
+af = attachment_factory_obj.create({
     "model": model,
     "res_id": res_id,
     "model_field": model_field,
@@ -35,10 +34,10 @@ attachment_factory = attachment_factory_obj.create({
 
 # file url
 # like: http://localhost:8069/web/download/attachment/1babc64e-6e99-4934-bc84-28263a0fdd88
-file_url = attachment_factory.url
+file_url = af.url
 
 # file name
-filename = attachment_factory.filename
+filename = af.filename
 ```
 
 ### 2. Automatically delete out-of-date data / 删除失效的数据
