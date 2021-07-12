@@ -1,4 +1,4 @@
-# Api For Download Attachment Directly Without Login Odoo
+# Api For Downloading Attachment Directly Without Login Odoo
 
 <div align=center>
   <img src="static/description/icon.png" width="80"/>
