@@ -3,7 +3,7 @@
 
     <data noupdate="1">
 
-        <record id="cron_delete_expired_download_file" model="ir.cron">
+        <record id="cron_delete_expired_data" model="ir.cron">
             <field name="name">[api_for_download_attachment_directly] 删除失效的数据</field>
             <field name="model">attachment.factory</field>
             <field name="function">delete_expired_file</field>
