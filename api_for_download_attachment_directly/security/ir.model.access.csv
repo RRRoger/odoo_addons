@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_attachment_factory_base_user,attachment_factory,model_attachment_factory,base.group_user,1,0,1,0

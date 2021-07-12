@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="api_for_download_attachment_directly.list">
+      <field name="name">api_for_download_attachment_directly list</field>
+      <field name="model">api_for_download_attachment_directly.api_for_download_attachment_directly</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="api_for_download_attachment_directly.action_window">
+      <field name="name">api_for_download_attachment_directly window</field>
+      <field name="res_model">api_for_download_attachment_directly.api_for_download_attachment_directly</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="api_for_download_attachment_directly.action_server">
+      <field name="name">api_for_download_attachment_directly server</field>
+      <field name="model_id" ref="model_api_for_download_attachment_directly_api_for_download_attachment_directly"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="api_for_download_attachment_directly" id="api_for_download_attachment_directly.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="api_for_download_attachment_directly.menu_1" parent="api_for_download_attachment_directly.menu_root"/>
+    <menuitem name="Menu 2" id="api_for_download_attachment_directly.menu_2" parent="api_for_download_attachment_directly.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="api_for_download_attachment_directly.menu_1_list" parent="api_for_download_attachment_directly.menu_1"
+              action="api_for_download_attachment_directly.action_window"/>
+    <menuitem name="Server to list" id="api_for_download_attachment_directly" parent="api_for_download_attachment_directly.menu_2"
+              action="api_for_download_attachment_directly.action_server"/>
+    -->
+  </data>
+</odoo>
