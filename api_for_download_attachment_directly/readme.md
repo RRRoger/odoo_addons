@@ -9,17 +9,19 @@
 ### 1. Usage / 如何使用?
 
 ```python
-attachment_factory_obj = self.env['attachment.factory']
+# when you use api
+from odoo.http import request
+attachment_factory_obj = request.env['attachment.factory']
 
-# Or when you use api
-# from odoo.http import request
-# attachment_factory_obj = request.env['attachment.factory']
+# Or Other
+# attachment_factory_obj = self.env['attachment.factory']
 
-model = ""
-res_id = ""
-model_field = ""
-filename_field = ""
-note = ""
+# Download  avatar of the partner whose id is 999 
+model = "res.partner"
+res_id = 999
+model_field = "avatar"
+filename_field = "avatar_name"
+note = "download avatar of partner"
 
 attachment_factory = attachment_factory_obj.create({
     "model": model,
@@ -42,7 +44,7 @@ filename = attachment_factory.filename
 > api_for_download_attachment_directly/data/data.xml
 
 ```xml
-<record id="cron_delete_expired_download_file" model="ir.cron">
+<record id="cron_delete_expired_data" model="ir.cron">
     <field name="name">[api_for_download_attachment_directly] 删除失效的数据</field>
     ...
 </record>
