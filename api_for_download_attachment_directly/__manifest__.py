@@ -5,7 +5,7 @@
     'summary': """ Attachment Download """,
 
     'description': """
-        Api For Download Attachment Directly Without Login Odoo
+        Api For Downloading Attachment Directly Without Login Odoo
     """,
 
     'author': "Roger",
