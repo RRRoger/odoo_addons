@@ -8,6 +8,8 @@
 
 ### 1. Usage / 如何使用?
 
+> Download  avatar of the partner whose id is 999 
+
 ```python
 # when you use api
 from odoo.http import request
@@ -41,7 +43,7 @@ filename = attachment_factory.filename
 
 ### 2. Automatically delete out-of-date data / 删除失效的数据
 
-> api_for_download_attachment_directly/data/data.xml
+> code in `api_for_download_attachment_directly/data/data.xml`
 
 ```xml
 <record id="cron_delete_expired_data" model="ir.cron">
