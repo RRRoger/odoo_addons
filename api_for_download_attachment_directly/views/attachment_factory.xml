@@ -12,6 +12,7 @@
                     <field name="model_field"/>
                     <field name="filename_field"/>
                     <field name="note"/>
+                    <field name="is_temporary"/>
                     <field name="create_uid"/>
                     <field name="create_date"/>
                 </tree>
@@ -27,6 +28,7 @@
                     <field name="model"/>
                     <field name="model_field"/>
                     <field name="filename_field"/>
+                    <field name="is_temporary"/>
                 </search>
             </field>
         </record>

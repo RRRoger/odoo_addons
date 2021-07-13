@@ -48,6 +48,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: api_for_download_attachment_directly
+#: model:ir.model.fields,field_description:api_for_download_attachment_directly.field_is_temporary
+msgid "Is Temporary"
+msgstr "临时记录"
+
+#. module: api_for_download_attachment_directly
 #: model:ir.model.fields,field_description:api_for_download_attachment_directly.field_attachment_factory___last_update
 msgid "Last Modified on"
 msgstr "最后修改日"

@@ -45,10 +45,12 @@ filename = af.filename
 ### 2. Automatically delete out-of-date data / 删除失效的数据
 
 > code in `api_for_download_attachment_directly/data/data.xml`
+>
+> delete 7 days ago temporary data
 
 ```xml
 <record id="cron_delete_expired_data" model="ir.cron">
-    <field name="name">[api_for_download_attachment_directly] 删除失效的数据</field>
+    <field name="name">[Download Attachment] 删除失效的数据</field>
     ...
 </record>
 ```

@@ -26,6 +26,7 @@ class AttachmentFactory(models.Model):
     res_id = fields.Integer('ID', index=True)
     model_field = fields.Char("Model Field")
     filename_field = fields.Char("Field Name")
+    is_temporary = fields.Boolean("Is Temporary", default=True)
     note = fields.Char("Note")
 
     @api.model
@@ -62,6 +63,6 @@ class AttachmentFactory(models.Model):
         _logger.info("[Api For Download Attachment Directly] Start to delete expired files, days={} ~~".format(days))
         now = datetime.datetime.now() + datetime.timedelta(days=-days)
         now = now.strftime("%Y-%m-%d %H:%M:%S")
-        sql = """ delete from attachment_factory where create_date < '{}'; """.format(now)
+        sql = """ delete from attachment_factory where create_date < '{}' and is_temporary; """.format(now)
         self._cr.execute(sql)
         return True
