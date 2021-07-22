@@ -22,4 +22,5 @@
 ## 2. tools
 
 - [xml rpc tools](odoo_xmlrpc)
+- [odoo-rpc tools](odoo_odoorpc)
 

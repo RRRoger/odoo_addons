@@ -1,4 +1,4 @@
-# xmlrpc tools
+# odoorpc tools
 
 ### 1. Config file description
 
