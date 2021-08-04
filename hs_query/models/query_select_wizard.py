@@ -121,7 +121,7 @@ WHERE user_id = %s and statement_code = '%s';
 
         query = get_query_statement_by_code(self.env, statement_code)
         if not query:
-            raise UserError(u"数据库查询代码[ %s ]不存在, 请联系管理员!!" % statement_code)
+            raise UserError("数据库查询代码[ %s ]不存在, 请联系管理员!!" % statement_code)
 
         sql = query.statement or ""
 
@@ -141,17 +141,17 @@ WHERE user_id = %s and statement_code = '%s';
         try:
             res_data = query_data(self.env, final_sql, None, None, columns, return_dict=1)
         except Exception as e:
-            raise UserError(u"查询出错: \n\n %s" % str(e))
+            raise UserError("查询出错: \n\n %s" % str(e))
 
         # 格式化excel需要的数据
         excel_data = excel_adapter.format_data(columns, res_data)
 
         now = datetime.datetime.now() + datetime.timedelta(hours=8)
 
-        xls_name = u'%s(%s).xlsx' % (query.name, now.strftime('%Y%m%d%H%M%S'))
+        xls_name = '%s(%s).xlsx' % (query.name, now.strftime('%Y%m%d%H%M%S'))
 
         # 生成excel所需要的数据
-        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data, u'查询条件', self.format_condition_desc_for_excel())
+        base_data = excel_adapter.excel_data_getter('查询结果', excel_data, '查询条件', self.format_condition_desc_for_excel())
 
         # 调用创建下载
         download_file_id = self.create_download_file(xls_name, base_data, query.id)

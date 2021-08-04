@@ -15,11 +15,9 @@ try:
 except ImportError:
     xlwt = None
 
-try:
-    from StringIO import StringIO ## for Python 2
-except ImportError:
-    from io import StringIO ## for Python 3
-
+# for Python 3
+from io import StringIO
+from io import BytesIO
 import os
 
 
@@ -63,7 +61,7 @@ def _excel_data_getter_for_openpyxl(name, excel_data, sheet2name=None, sheet2dat
         for r in sheet2data:
             ws2.append(r)
 
-    fp = StringIO()
+    fp = BytesIO()
     wb.save(fp)
     fp.seek(0)
     data = fp.read()
@@ -77,10 +75,10 @@ def _excel_data_getter_for_xlsxwriter(name, excel_data, sheet2name=None, sheet2d
         sheet2name & sheet2data 用来记录报表查询的条件
     """
 
-    title_dict = {'font_name': u'Source Han Sans CN', 'font_size': 12, 'align': 'centre', 'bg_color': "#C8C8C8"}
-    row_dict = {'font_name': u'Source Han Sans CN', 'font_size': 10}
+    title_dict = {'font_name': 'Source Han Sans CN', 'font_size': 12, 'align': 'centre', 'bg_color': "#C8C8C8"}
+    row_dict = {'font_name': 'Source Han Sans CN', 'font_size': 10}
 
-    xls = StringIO()
+    xls = BytesIO()
     wb = xlsxwriter.Workbook(xls)
     worksheet = wb.add_worksheet(name)
     title_style = wb.add_format(title_dict)
@@ -117,7 +115,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     header_style = xlwt.easyxf('pattern: pattern solid;font: name Source Han Sans CN;')
 
     header_font = xlwt.Font()
-    header_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
+    header_font.name = 'Source Han Sans CN'  # 指定“Source Han Sans CN”
     header_font.height = 200
     header_style.font = header_font
 
@@ -131,7 +129,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     normal_style = xlwt.XFStyle()
 
     normal_font = xlwt.Font()
-    normal_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
+    normal_font.name = 'Source Han Sans CN'  # 指定“Source Han Sans CN”
     normal_font.height = 200
 
     normal_style.font = normal_font
@@ -140,7 +138,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
     group_style = xlwt.XFStyle()  # xlwt.easyxf('pattern: pattern solid;')
 
     group_font = xlwt.Font()
-    group_font.name = u'Source Han Sans CN'  # 指定“Source Han Sans CN”
+    group_font.name = 'Source Han Sans CN'  # 指定“Source Han Sans CN”
     group_font.height = 200  # 字体大小
     # group_font.colour_index = 0x0C
     # group_font.bold = True
@@ -204,7 +202,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
                 else:
                     worksheet2.write(r, c, '%s' % sheet2data[r][c], style)
 
-    fp = StringIO()
+    fp = BytesIO()
     workbook.save(fp)
     fp.seek(0)
     data = fp.read()

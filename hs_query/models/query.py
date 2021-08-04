@@ -115,9 +115,10 @@ class QueryStatement(models.Model):
         context = self._context.copy()
         file_obj = self.env['hs.query.download.file']
         view_id = self.env.ref('hs_query.hs_query_download_file_view_form').id
+        data_str = json.dumps(results, ensure_ascii=False, indent=2)
         download_file_id = file_obj.create({
             'file_name': "{}.json".format(self.name),
-            'file': base64.b64encode(json.dumps(results, ensure_ascii=False, indent=2)),
+            'file': base64.b64encode(bytes(data_str, "utf-8")).decode('ascii'),
             'statement_id': self.id,
         }).id
         res = {

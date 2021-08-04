@@ -1,16 +1,27 @@
 odoo.define('hs_query', function (require) {
     "use strict";
+    var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
-    var Widget = require('web.Widget');
     var ajax = require('web.ajax');
-    var translation = require('web.translation');
-    var ActionManager = require('web.ActionManager');
-    var _t = translation._t;
 
     /* Roger's code blow */
 
+    function get_ctx(_parent){
+        /* 获取最新的action的context */
+        let res = {};
+        let tmp = 0;
+        let prefix = 'action_'
+        for(let ac_name in _parent.actions){
+            let ac_index = ac_name.split('_')[1] * 1;
+            if(ac_index > tmp){
+                tmp = ac_index
+            }
+        }
+        return _parent.actions[prefix + tmp].context
+    };
+
     // jump to show data page
-    var query_page = Widget.extend({
+    var QueryPage = AbstractAction.extend({
         start: function () {
             var self = this;
             var context = {};
@@ -20,20 +31,20 @@ odoo.define('hs_query', function (require) {
 
             // >_< ....
             // context 在 parent.action_stack 的最后一个元素 的 action_descr
-            context = parent.action_stack.slice(-1)[0].action_descr.context
+            let this_ctx = get_ctx(parent);
 
             ajax.jsonRpc('/query/page/', 'call', {
-                context: context,
+                context: this_ctx,
             }).then(function (result) {
                 self.$el.append(result)
             });
         }
     });
 
-    core.action_registry.add('hs_query.sys_query_report', query_page);
+    core.action_registry.add('hs_query.sys_query_report', QueryPage);
 
     // Homepage
-    var homepage = Widget.extend({
+    var Homepage = AbstractAction.extend({
         start: function () {
             var self = this;
             ajax.jsonRpc('/query/homepage/', 'call', {
@@ -43,7 +54,12 @@ odoo.define('hs_query', function (require) {
         }
     });
 
-    core.action_registry.add('hs_query.sys_query_homepage', homepage);
+    core.action_registry.add('hs_query.sys_query_homepage', Homepage);
+
+    return {
+        Homepage: Homepage,
+        QueryPage: QueryPage
+    };
 
     /* Roger's code end */
 });
