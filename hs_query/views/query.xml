@@ -6,10 +6,14 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="jump2page" string="开始查询" type="object" class="oe_highlight"
-                                groups="base.group_system,hs_query.group_data_analysis_user"/>
-                        <button name="download_data" string="下载查询结果" type="object" class="oe_highlight"
-                                groups="base.group_system,hs_query.group_data_analysis_user"/>
+                        <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight"
+                                groups="hs_query.group_data_analysis_user"/>
+                        <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight"
+                                groups="hs_query.group_data_analysis_user"/>
+                        <button name="export_query_statement" icon="fa-cloud-download" string="下载数据库查询配置" type="object" class="oe_highlight"
+                                groups="hs_query.group_data_analysis_manager"/>
+                        <button name="import_query_statement" icon="fa-cloud-upload" string="上传数据库查询配置" type="object" class="oe_highlight"
+                                groups="hs_query.group_data_analysis_manager"/>
                     </header>
                     <sheet>
                         <group>
@@ -70,14 +74,16 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="sequence" widget="handle"/>
-                    <button name="jump2page" string="开始查询" type="object" class="oe_highlight"
+                    <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
-                    <button name="download_data" string="下载查询结果" type="object" class="oe_highlight"
+                    <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
                     <field name="name"/>
                     <field name="code"/>
                     <field name="type"/>
                     <field name="wizard_name"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
@@ -119,6 +125,26 @@
                     </footer>
                 </form>
             </field>
+        </record>
+
+        <record id="hs_query_download_file_view_tree" model="ir.ui.view">
+            <field name="name">下载记录</field>
+            <field name="model">hs.query.download.file</field>
+            <field name="arch" type="xml">
+                <tree editable="top" edit='false' create="false">
+                    <field name="file" filename="file_name" readonly="1"/>
+                    <field name="file_name" invisible="1"/>
+                    <field name="statement_id"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hs_query_download_file_action_window" model="ir.actions.act_window">
+            <field name="name">下载记录</field>
+            <field name="res_model">hs.query.download.file</field>
+            <field name="view_mode">tree</field>
         </record>
 
     </data>

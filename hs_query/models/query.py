@@ -3,6 +3,8 @@
 from odoo import models, api, _, fields
 import datetime
 import logging
+import json
+import base64
 
 _logger = logging.getLogger(__name__)
 
@@ -14,7 +16,7 @@ TYPE_SELECTION = [
 class QueryStatement(models.Model):
 
     _name = "hs.query.statement"
-    _order = "sequence, id"
+    _order = "sequence, id desc"
 
     # alter table hs_query_statement drop constraint hs_query_statement_unique_statement_wizard_name ;
     # 删除约束
@@ -86,6 +88,62 @@ class QueryStatement(models.Model):
         self.ensure_one()
         wizard_parent = self.env['query.select.wizard.parent']
         return wizard_parent._download(self.code)
+
+    @api.multi
+    def export_query_statement(self):
+        results = []
+        for obj in self:
+            data = {
+                "name": obj.name,
+                "code": obj.code,
+                "type": obj.type,
+                "sequence": obj.sequence,
+                "note": obj.note,
+                "statement": obj.statement,
+                "wizard_name": obj.wizard_name,
+            }
+            output_ids = []
+            for output in obj.output_ids:
+                output_ids.append((0, 0, {
+                    "name": output.name,
+                    "sequence": output.sequence,
+                    "alias": output.alias,
+                    "note": output.note
+                }))
+            data['output_ids'] = output_ids
+        results.append(data)
+        context = self._context.copy()
+        file_obj = self.env['hs.query.download.file']
+        view_id = self.env.ref('hs_query.hs_query_download_file_view_form').id
+        download_file_id = file_obj.create({
+            'file_name': "{}.json".format(self.name),
+            'file': base64.b64encode(json.dumps(results, ensure_ascii=False, indent=2)),
+            'statement_id': self.id,
+        }).id
+        res = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'hs.query.download.file',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'target': 'new',
+            'res_id': download_file_id,
+            'context': context,
+        }
+        return res
+
+    def import_query_statement(self):
+        view_id = self.env.ref('hs_query.import_query_statement_wizard_form').id
+        res = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'import.query.statement.wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'target': 'new',
+            'res_id': False,
+        }
+        return res
 
 
 class QueryStatementOutput(models.Model):

@@ -2,7 +2,7 @@
     <data>
 
         <!--root menu-->
-        <menuitem id="hs_data_analysis_root_menu" name="数据分析" sequence="2"/>
+        <menuitem id="hs_data_analysis_root_menu" name="数据分析" sequence="2" groups="hs_query.group_data_analysis_user"/>
 
 
             <!--lv2 menu-->
@@ -19,17 +19,22 @@
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_statement_action_window" sequence="10"/>
 
+                <menuitem id="hs_query_download_file_menu" name="文件下载记录"
+                          groups="base.group_system,hs_query.group_data_analysis_manager"
+                          parent="hs_data_analysis_config_menu"
+                          action="hs_query_download_file_action_window" sequence="20"/>
+
                 <menuitem id="hs_query_input_cache_menu" name="查询条件缓存"
                           groups="base.group_system,hs_query.group_data_analysis_manager"
                           parent="hs_data_analysis_config_menu"
-                          action="hs_query_input_cache_action_window" sequence="20"/>
+                          action="hs_query_input_cache_action_window" sequence="30"/>
 
             <!--Demo-->
             <menuitem id="hs_query_demo_menu" name="Demo" sequence="100" parent="hs_data_analysis_root_menu"/>
 
-                <menuitem id="hs_query_demo_report_wizard_action_menu" name="Query Demo"
+                <menuitem id="hs_query_demo_report_wizard_action_menu" name="查询所有联系人-demo"
                       parent="hs_query_demo_menu"
-                      groups="base.group_system"
+                      groups="hs_query.group_data_analysis_manager"
                       action="query_demo_report_wizard_action" sequence="10"/>
     </data>
 </odoo>

@@ -19,6 +19,7 @@
         'views/query.xml',
         'views/query_select_wizard_parent.xml',
         'views/query_input_cache.xml',
+        'views/import_query_wizard.xml',
 
         'query_demo/query_demo_report.xml',
         'query_demo/query_demo_data.xml',

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-02 09:53+0000\n"
-"PO-Revision-Date: 2019-07-02 09:53+0000\n"
+"POT-Creation-Date: 2021-07-01 02:48+0000\n"
+"PO-Revision-Date: 2021-07-01 02:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hs_query
+#: model:ir.ui.view,arch_db:hs_query.query_demo_report_wizard_form
 #: model:ir.ui.view,arch_db:hs_query.query_select_wizard_parent_form
 msgid "Confirm"
 msgstr "确认"
@@ -27,6 +28,7 @@ msgstr "确认"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_create_uid
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_create_uid
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_create_uid
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_create_uid
 msgid "Created by"
 msgstr "创建人"
 
@@ -37,8 +39,14 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_create_date
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_create_date
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_create_date
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_create_date
 msgid "Created on"
 msgstr "创建时间"
+
+#. module: hs_query
+#: model:ir.ui.menu,name:hs_query.hs_query_demo_menu
+msgid "Demo"
+msgstr "Demo"
 
 #. module: hs_query
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_adapter_display_name
@@ -47,11 +55,13 @@ msgstr "创建时间"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_display_name
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_display_name
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_display_name
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_display_name
 #: model:ir.model.fields,field_description:hs_query.field_query_select_wizard_parent_display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: hs_query
+#: model:ir.ui.view,arch_db:hs_query.query_demo_report_wizard_form
 #: model:ir.ui.view,arch_db:hs_query.query_select_wizard_parent_form
 msgid "Download"
 msgstr "下载"
@@ -63,6 +73,7 @@ msgstr "下载"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_id
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_id
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_id
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_id
 #: model:ir.model.fields,field_description:hs_query.field_query_select_wizard_parent_id
 msgid "ID"
 msgstr "ID"
@@ -74,6 +85,7 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record___last_update
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement___last_update
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output___last_update
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard___last_update
 #: model:ir.model.fields,field_description:hs_query.field_query_select_wizard_parent___last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
@@ -85,8 +97,9 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_write_uid
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_write_uid
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_write_uid
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_write_uid
 msgid "Last Updated by"
-msgstr "最后更新人"
+msgstr "最后更新者"
 
 #. module: hs_query
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_adapter_write_date
@@ -95,6 +108,7 @@ msgstr "最后更新人"
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_record_write_date
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_output_write_date
 #: model:ir.model.fields,field_description:hs_query.field_hs_query_statement_write_date
+#: model:ir.model.fields,field_description:hs_query.field_query_demo_report_wizard_write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
@@ -107,6 +121,11 @@ msgstr "Query Homepage"
 #: model:ir.actions.client,name:hs_query.query_report_action
 msgid "Query Report"
 msgstr "Query Report"
+
+#. module: hs_query
+#: model:ir.model.fields,help:hs_query.field_hs_query_statement_output_alias
+msgid "SQL查询出来的列名"
+msgstr "SQL查询出来的列名"
 
 #. module: hs_query
 #: model:ir.model,name:hs_query.model_hs_query_adapter
@@ -139,13 +158,34 @@ msgid "hs.query.statement.output"
 msgstr "hs.query.statement.output"
 
 #. module: hs_query
+#: model:ir.model,name:hs_query.model_query_demo_report_wizard
+msgid "query.demo.report.wizard"
+msgstr "query.demo.report.wizard"
+
+#. module: hs_query
 #: model:ir.actions.act_window,name:hs_query.query_select_wizard_parent_action
 #: model:ir.model,name:hs_query.model_query_select_wizard_parent
 msgid "query.select.wizard.parent"
 msgstr "query.select.wizard.parent"
 
 #. module: hs_query
+#: model:ir.model.fields,help:hs_query.field_hs_query_statement_output_name
+msgid "在Excel或者界面上的显示"
+msgstr "在Excel或者界面上的显示"
+
+#. module: hs_query
 #: selection:hs.query.statement,type:0
 msgid "普通SQL查询"
 msgstr "普通SQL查询"
+
+#. module: hs_query
+#: model:ir.actions.act_window,name:hs_query.query_demo_report_wizard_action
+#: model:ir.ui.menu,name:hs_query.hs_query_demo_report_wizard_action_menu
+msgid "查询所有联系人-demo"
+msgstr "查询所有联系人-demo"
+
+#. module: hs_query
+#: model:ir.model.fields,help:hs_query.field_hs_query_statement_type
+msgid "目前只有SQL,其他类型待开发!"
+msgstr "目前只有SQL,其他类型待开发!"
 
