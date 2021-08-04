@@ -37,7 +37,7 @@ class QueryAdapter(models.TransientModel):
         try:
             sql = request.env[wizard_name].format_sql_by_condition(sql, query_condition)
             data = query_and_count_data(self.env, sql, page, page_size, query.get_columns())
-        except Exception, e:
+        except Exception as e:
             data = {'error': 1, 'msg': ERROR_SQL_QUERY % str(e)}
 
         return data

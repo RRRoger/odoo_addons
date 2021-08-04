@@ -15,7 +15,11 @@ try:
 except ImportError:
     xlwt = None
 
-from cStringIO import StringIO
+try:
+    from StringIO import StringIO ## for Python 2
+except ImportError:
+    from io import StringIO ## for Python 3
+
 import os
 
 
@@ -242,7 +246,6 @@ def format_data(headers, data, context=None):
             if avg_index:
                 for _s in sum_index:
                     last_line[_s] = sum(col[_s]) / len(col[_s])
-            print last_line
             values.append(last_line)
     return [header_keys] + values
 

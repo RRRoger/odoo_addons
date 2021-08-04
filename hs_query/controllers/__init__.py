@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import query_controller
+from . import query_controller

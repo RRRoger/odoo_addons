@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import sys
 
 def format_cols(columns):
     sel_fields = []
@@ -106,3 +106,14 @@ def query_and_count_data(env, sql, page, page_size, columns):
 
 def get_query_statement_by_code(env, _statement_code):
     return env['hs.query.statement'].search([('code', '=', _statement_code)], limit=1)
+
+# base64编码/解码
+# 返回python是2还是3
+def __py_env():
+    """
+    返回python是2.x还是3.x
+    """
+    return sys.version[:1]
+
+
+PY_ENV = __py_env()

@@ -140,7 +140,7 @@ WHERE user_id = %s and statement_code = '%s';
         # 执行sql
         try:
             res_data = query_data(self.env, final_sql, None, None, columns, return_dict=1)
-        except Exception, e:
+        except Exception as e:
             raise UserError(u"查询出错: \n\n %s" % str(e))
 
         # 格式化excel需要的数据

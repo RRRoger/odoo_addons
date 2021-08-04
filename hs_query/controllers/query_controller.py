@@ -8,6 +8,7 @@ import jinja2
 from odoo.http import request
 from odoo import http
 from odoo.addons.hs_query.libs.query_libs import get_query_statement_by_code
+from ..libs.query_libs import PY_ENV
 _logger = logging.getLogger(__name__)
 
 
@@ -22,9 +23,6 @@ else:
     loader = jinja2.PackageLoader('odoo.addons.hs_query', "html")
 
 jinja_env = jinja2.Environment('<%', '%>', '${', '}', '%', loader=loader, autoescape=True)
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 
 class QueryController(http.Controller):

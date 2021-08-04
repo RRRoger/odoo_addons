@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import controllers
-import models
-import libs
-import query_demo
+from . import controllers
+from . import models
+from . import libs
+from . import query_demo
