@@ -171,7 +171,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
 
             if excel_data[r][c] is None:
                 worksheet.write(r, c, None, style)
-            elif isinstance(excel_data[r][c], (int, long, float, complex)):
+            elif isinstance(excel_data[r][c], (int, float, complex)):
                 worksheet.write(r, c, excel_data[r][c], style)
             else:
                 worksheet.write(r, c, '%s' % excel_data[r][c], style)
@@ -197,7 +197,7 @@ def _excel_data_getter_for_xlwt(name, excel_data, sheet2name=None, sheet2data=No
 
                 if sheet2data[r][c] is None:
                     worksheet2.write(r, c, None, style)
-                elif isinstance(sheet2data[r][c], (int, long, float, complex)):
+                elif isinstance(sheet2data[r][c], (int, float, complex)):
                     worksheet2.write(r, c, sheet2data[r][c], style)
                 else:
                     worksheet2.write(r, c, '%s' % sheet2data[r][c], style)
