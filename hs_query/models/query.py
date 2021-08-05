@@ -9,7 +9,7 @@ import base64
 _logger = logging.getLogger(__name__)
 
 TYPE_SELECTION = [
-    ('sql', u'普通SQL查询',)
+    ('sql', '普通SQL查询',)
 ]
 
 
@@ -22,23 +22,23 @@ class QueryStatement(models.Model):
     # 删除约束
 
     _sql_constraints = [
-        ('unique_statement_code', 'unique(code)', u'代码不能重复'),
-        ('unique_statement_name', 'unique(name)', u'名称不能重复'),
+        ('unique_statement_code', 'unique(code)', '代码不能重复'),
+        ('unique_statement_name', 'unique(name)', '名称不能重复'),
     ]
 
-    name = fields.Char(string=u'名称')
-    code = fields.Char(string=u'代码', help=u"全局唯一, 用于代码中识别!")
-    active = fields.Boolean(string=u'有效', default=True)
-    type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql', help=u"目前只有SQL,其他类型待开发!")
-    sequence = fields.Integer(string=u'顺序', default=10)
-    note = fields.Text(string=u'说明')
+    name = fields.Char(string='名称')
+    code = fields.Char(string='代码', help="全局唯一, 用于代码中识别!")
+    active = fields.Boolean(string='有效', default=True)
+    type = fields.Selection(TYPE_SELECTION, string='类型', default='sql', help="目前只有SQL,其他类型待开发!")
+    sequence = fields.Integer(string='顺序', default=10)
+    note = fields.Text(string='说明')
 
-    statement = fields.Text(string=u'语句')
-    wizard_name = fields.Char(string=u'向导名称', default='query.select.wizard.parent')
+    statement = fields.Text(string='语句')
+    wizard_name = fields.Char(string='向导名称', default='query.select.wizard.parent')
 
-    output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string=u'查询输出', copy=True)
-    record_ids = fields.One2many('hs.query.record', 'statement_id', string=u'查询记录', copy=False)
-    download_ids = fields.One2many('hs.query.download.file', 'statement_id', string=u'下载记录', copy=False)
+    output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string='查询输出', copy=True)
+    record_ids = fields.One2many('hs.query.record', 'statement_id', string='查询记录', copy=False)
+    download_ids = fields.One2many('hs.query.download.file', 'statement_id', string='下载记录', copy=False)
 
     @api.multi
     def copy(self, default=None):
@@ -51,7 +51,7 @@ class QueryStatement(models.Model):
     @api.multi
     def get_columns(self):
         self.ensure_one()
-        columns = [{"title": u"序号", "alias": "__index__", "name": u"序号", "group": ""}]
+        columns = [{"title": "序号", "alias": "__index__", "name": "序号", "group": ""}]
         for output in self.output_ids:
             columns.append({
                 'title': output.name,
@@ -153,14 +153,14 @@ class QueryStatementOutput(models.Model):
     _order = "sequence, id"
 
     _sql_constraints = [
-        ('unique_statement_id_name', 'unique(statement_id, name)', u'名称不能重复'),
+        ('unique_statement_id_name', 'unique(statement_id, name)', '名称不能重复'),
     ]
 
-    name = fields.Char(string=u'输出字段名', help=u"在Excel或者界面上的显示")
-    statement_id = fields.Many2one("hs.query.statement", string=u"数据库查询")
-    sequence = fields.Integer(string=u'顺序', default=10)
-    alias = fields.Char(string=u'别名', help=u"SQL查询出来的列名")
-    note = fields.Text(string=u'说明')
+    name = fields.Char(string='输出字段名', help="在Excel或者界面上的显示")
+    statement_id = fields.Many2one("hs.query.statement", string="数据库查询")
+    sequence = fields.Integer(string='顺序', default=10)
+    alias = fields.Char(string='别名', help="SQL查询出来的列名")
+    note = fields.Text(string='说明')
 
 
 class QueryInputCache(models.Model):
@@ -168,10 +168,10 @@ class QueryInputCache(models.Model):
     _name = "hs.query.input.cache"
     _order = "id desc"
 
-    statement_code = fields.Char(string=u"数据库查询代码")
-    user_id = fields.Many2one('res.users', string=u"用户")
-    query_condition = fields.Text(string=u"查询条件")
-    condition_desc = fields.Text(string=u"查询条件描述", help=u"用于展示在前端!")
+    statement_code = fields.Char(string="数据库查询代码")
+    user_id = fields.Many2one('res.users', string="用户")
+    query_condition = fields.Text(string="查询条件")
+    condition_desc = fields.Text(string="查询条件描述", help="用于展示在前端!")
 
 
 class QueryRecord(models.Model):
@@ -179,8 +179,8 @@ class QueryRecord(models.Model):
     _name = "hs.query.record"
     _order = "id desc"
 
-    statement_id = fields.Many2one("hs.query.statement", string=u"数据库查询")
-    user_id = fields.Many2one('res.users', string=u"用户")
+    statement_id = fields.Many2one("hs.query.statement", string="数据库查询")
+    user_id = fields.Many2one('res.users', string="用户")
 
 
 class QueryDownloadFile(models.Model):
@@ -188,10 +188,10 @@ class QueryDownloadFile(models.Model):
     _name = "hs.query.download.file"
     _order = "id desc"
 
-    statement_id = fields.Many2one("hs.query.statement", string=u"数据库查询")
-    user_id = fields.Many2one('res.users', string=u"用户")
-    file = fields.Binary(string=u"下载文件", attachment=True)
-    file_name = fields.Char(u'文件名')
+    statement_id = fields.Many2one("hs.query.statement", string="数据库查询")
+    user_id = fields.Many2one('res.users', string="用户")
+    file = fields.Binary(string="下载文件", attachment=True)
+    file_name = fields.Char('文件名')
 
     def delete_expired_file(self, days=7):
         _logger.info("[Query] Start to delete expired files ~~")

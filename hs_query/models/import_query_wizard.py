@@ -12,8 +12,8 @@ _logger = logging.getLogger(__name__)
 class ImportQueryStatementWizard(models.TransientModel):
     _name = 'import.query.statement.wizard'
 
-    file_name = fields.Char(u'文件名')
-    file = fields.Binary(u'文件')
+    file_name = fields.Char('文件名')
+    file = fields.Binary('文件')
 
     def confirm_button(self):
         try:
