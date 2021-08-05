@@ -1,10 +1,12 @@
-# odoo_addons / odoo10插件
+# odoo_addons / odoo插件
 
 [![](https://img.shields.io/badge/version-python3.x-green?style=flat-square)](https://www.python.org/downloads/)
 [![GitHub last commit](https://img.shields.io/github/stars/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons)
 [![GitHub issues](https://img.shields.io/github/issues/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons/commits/master)
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons/blob/master/LICENSE)
+
+> Master分支为odoo10插件,其他版本见不同分支,如:odoo12
 
 ## 1. Odoo addons / odoo插件
 
