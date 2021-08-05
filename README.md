@@ -1,6 +1,5 @@
 # odoo_addons / odoo插件
 
-[![](https://img.shields.io/badge/version-python3.x-green?style=flat-square)](https://www.python.org/downloads/)
 [![GitHub last commit](https://img.shields.io/github/stars/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons)
 [![GitHub issues](https://img.shields.io/github/issues/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/RRRoger/odoo_addons.svg?style=flat-square)](https://github.com/RRRoger/odoo_addons/commits/master)
