@@ -39,6 +39,14 @@ class QueryStatement(models.Model):
     output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string=u'查询输出', copy=True)
     record_ids = fields.One2many('hs.query.record', 'statement_id', string=u'查询记录', copy=False)
     download_ids = fields.One2many('hs.query.download.file', 'statement_id', string=u'下载记录', copy=False)
+    user_ids = fields.Many2many('res.users', 'hs_query_users_rel', 'user_id', 'query_id', u'用户')
+
+    @api.model
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        if not self.user_has_groups('hs_query.group_data_analysis_manager'):
+            args.append(('user_ids', 'in', [self.env.user.id]))
+        return super(QueryStatement, self)._search(args, offset=offset, limit=limit, order=order, count=count,
+                                                 access_rights_uid=access_rights_uid)
 
     @api.multi
     def copy(self, default=None):
