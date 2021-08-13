@@ -9,7 +9,8 @@ import base64
 _logger = logging.getLogger(__name__)
 
 TYPE_SELECTION = [
-    ('sql', u'普通SQL查询',)
+    ('sql', u'普通SQL查询',),
+    ('py_code', u'Python代码',)
 ]
 
 
@@ -78,7 +79,10 @@ class QueryStatement(models.Model):
         """
         query = self.search([('code', '=', statement_code)], limit=1)
         if query:
-            query.write({'record_ids': [(0, 0, {'user_id': user_id})]})
+            self.env['hs.query.record'].create({
+                'user_id': user_id,
+                'statement_id': query[0].id
+            })
         return True
 
     @api.multi
@@ -196,11 +200,10 @@ class QueryDownloadFile(models.Model):
     _order = "id desc"
 
     statement_id = fields.Many2one("hs.query.statement", string=u"数据库查询")
-    user_id = fields.Many2one('res.users', string=u"用户")
     file = fields.Binary(string=u"下载文件", attachment=True)
     file_name = fields.Char(u'文件名')
 
-    def delete_expired_file(self, days=7):
+    def delete_expired_file(self, days=60):
         _logger.info("[Query] Start to delete expired files ~~")
         now = datetime.datetime.now() + datetime.timedelta(days=-days)
         now = now.strftime("%Y-%m-%d %H:%M:%S")

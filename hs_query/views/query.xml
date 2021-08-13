@@ -79,9 +79,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="sequence" widget="handle"/>
-                    <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight"
+                    <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
-                    <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight"
+                    <button name="download_data" icon="fa-download" string="下载查询结果" type="object"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
                     <field name="name"/>
                     <field name="code"/>
