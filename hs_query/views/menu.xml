@@ -17,7 +17,7 @@
 
                 <!--lv3 menu-->
                 <menuitem id="hs_data_analysis_query_menu" name="数据库查询"
-                          groups="base.group_system,hs_query.group_data_analysis_manager"
+                          groups="base.group_system,hs_query.group_data_analysis_user"
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_statement_action_window" sequence="10"/>
 

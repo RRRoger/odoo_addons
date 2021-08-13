@@ -9,7 +9,8 @@ import base64
 _logger = logging.getLogger(__name__)
 
 TYPE_SELECTION = [
-    ('sql', '普通SQL查询',)
+    ('sql', u'普通SQL查询',),
+    ('py_code', u'Python代码',)
 ]
 
 
@@ -39,6 +40,14 @@ class QueryStatement(models.Model):
     output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string='查询输出', copy=True)
     record_ids = fields.One2many('hs.query.record', 'statement_id', string='查询记录', copy=False)
     download_ids = fields.One2many('hs.query.download.file', 'statement_id', string='下载记录', copy=False)
+    user_ids = fields.Many2many('res.users', 'hs_query_users_rel', 'user_id', 'query_id', '用户')
+
+    @api.model
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        if not self.user_has_groups('hs_query.group_data_analysis_manager'):
+            args.append(('user_ids', 'in', [self.env.user.id]))
+        return super(QueryStatement, self)._search(args, offset=offset, limit=limit, order=order, count=count,
+                                                 access_rights_uid=access_rights_uid)
 
     @api.multi
     def copy(self, default=None):
@@ -70,7 +79,10 @@ class QueryStatement(models.Model):
         """
         query = self.search([('code', '=', statement_code)], limit=1)
         if query:
-            query.write({'record_ids': [(0, 0, {'user_id': user_id})]})
+            self.env['hs.query.record'].create({
+                'user_id': user_id,
+                'statement_id': query[0].id
+            })
         return True
 
     @api.multi
@@ -189,11 +201,10 @@ class QueryDownloadFile(models.Model):
     _order = "id desc"
 
     statement_id = fields.Many2one("hs.query.statement", string="数据库查询")
-    user_id = fields.Many2one('res.users', string="用户")
     file = fields.Binary(string="下载文件", attachment=True)
     file_name = fields.Char('文件名')
 
-    def delete_expired_file(self, days=7):
+    def delete_expired_file(self, days=60):
         _logger.info("[Query] Start to delete expired files ~~")
         now = datetime.datetime.now() + datetime.timedelta(days=-days)
         now = now.strftime("%Y-%m-%d %H:%M:%S")
