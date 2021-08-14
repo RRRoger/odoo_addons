@@ -49,7 +49,6 @@ class QueryStatement(models.Model):
         return super(QueryStatement, self)._search(args, offset=offset, limit=limit, order=order, count=count,
                                                  access_rights_uid=access_rights_uid)
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         default['name'] = self.name + "(copy)"
@@ -57,7 +56,6 @@ class QueryStatement(models.Model):
         default['wizard_name'] = "query.select.wizard.parent"
         return super(QueryStatement, self).copy(default)
 
-    @api.multi
     def get_columns(self):
         self.ensure_one()
         columns = [{"title": "序号", "alias": "__index__", "name": "序号", "group": ""}]
@@ -85,7 +83,6 @@ class QueryStatement(models.Model):
             })
         return True
 
-    @api.multi
     def jump2page(self):
         """
             开始datatables展示
@@ -95,13 +92,11 @@ class QueryStatement(models.Model):
         wizard_parent = self.env['query.select.wizard.parent']
         return wizard_parent._confirm(self.code)
 
-    @api.multi
     def download_data(self):
         self.ensure_one()
         wizard_parent = self.env['query.select.wizard.parent']
         return wizard_parent._download(self.code)
 
-    @api.multi
     def export_query_statement(self):
         results = []
         for obj in self:

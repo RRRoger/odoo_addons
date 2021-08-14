@@ -72,7 +72,6 @@ WHERE user_id = %s and statement_code = '%s';
         """
         return []
 
-    @api.multi
     def confirm(self):
         """
             开始datatables展示
@@ -81,7 +80,6 @@ WHERE user_id = %s and statement_code = '%s';
         self.ensure_one()
         return self._confirm()
 
-    @api.multi
     def _confirm(self, statement_code=None):
         statement_code = statement_code if statement_code else self._statement_code
 
@@ -107,7 +105,6 @@ WHERE user_id = %s and statement_code = '%s';
         self.env['hs.query.statement'].create_query_record(statement_code, self._uid)
         return res
 
-    @api.multi
     def download(self):
         """
             下载excel
@@ -187,7 +184,6 @@ WHERE user_id = %s and statement_code = '%s';
         }).id
         return create_id
 
-    @api.multi
     def get_query_condition_and_desc(self):
         """
             获取查询条件
