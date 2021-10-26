@@ -17,7 +17,6 @@
 | [rowno_in_tree](rowno_in_tree)                               | Row Number in tree/list view                                 |
 | [hs_query](hs_query)                                         | 数据报表分析                                                 |
 | [ir_actions_enhance](ir_actions_enhance)                     | ir_actions增强<br />`ir.actions.server`添加json,base64,re等Python库 |
-| [api_for_download_attachment_directly](api_for_download_attachment_directly) | 下载附件免登陆<br />Download Attachment Without Login Odoo   |
 
 
 ## 2. tools
