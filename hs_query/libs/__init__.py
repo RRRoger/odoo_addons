@@ -1,2 +1,2 @@
-import query_libs
-import excel_adapter
+from . import query_libs
+from . import excel_adapter

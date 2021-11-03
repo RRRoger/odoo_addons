@@ -106,3 +106,7 @@ def query_and_count_data(env, sql, page, page_size, columns):
 
 def get_query_statement_by_code(env, _statement_code):
     return env['hs.query.statement'].search([('code', '=', _statement_code)], limit=1)
+
+
+def get_query_inst(env, query_id):
+    return env['hs.query.statement'].browse(query_id)

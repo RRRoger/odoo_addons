@@ -2,19 +2,24 @@
 
 .column-bold{font-weight:bold;}
 
+.download_url{
+    font-weight:bold;
+    font-size:16px
+}
+
 .condition_desc_title{
     font-weight:bold;
-    font-size:14px;
+    font-size:16px;
 }
 
 .condition_desc{
-    font-weight:bold;
     margin-left:16px;
-    font-size:14px;
+    margin-bottom: -16px;
 }
 
 .desc {
     font-size:20px;
+    font-weight:bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,5 +43,5 @@
     margin-left: 30px;
     color: #777777;
     max-width: 700px;
-    font-size: 16px;
+    font-size: 20px;
 }

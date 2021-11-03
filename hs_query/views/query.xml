@@ -7,24 +7,33 @@
                 <form>
                     <header>
                         <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('use_condition', '=', True)]}"
                                 groups="hs_query.group_data_analysis_user"/>
                         <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('use_condition', '=', True)]}"
                                 groups="hs_query.group_data_analysis_user"/>
-                        <button name="export_query_statement" icon="fa-cloud-download" string="下载数据库查询配置" type="object" class="oe_highlight"
+                        <button name="query_by_condition" icon="fa-play-circle" string="按条件查询" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('use_condition', '=', False)]}"
+                                groups="hs_query.group_data_analysis_user"/>
+                        <button name="export_query_statement" icon="fa-cloud-download" string="下载数据库查询配置" type="object"
                                 groups="hs_query.group_data_analysis_manager"/>
-                        <button name="import_query_statement" icon="fa-cloud-upload" string="上传数据库查询配置" type="object" class="oe_highlight"
+                        <button name="import_query_statement" icon="fa-cloud-upload" string="上传数据库查询配置" type="object"
                                 groups="hs_query.group_data_analysis_manager"/>
                     </header>
                     <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1" required="1"/></h1>
+                        </div>
                         <group>
                             <group>
-                                <field name="name" required="1"/>
                                 <field name="code" required="1"/>
                                 <field name="type" required="1"
                                        groups="hs_query.group_data_analysis_manager"/>
                                 <field name="sequence" required="1"
                                        groups="hs_query.group_data_analysis_manager"/>
                                 <field name="wizard_name" required="1"
+                                       groups="hs_query.group_data_analysis_manager"/>
+                                <field name="use_condition"
                                        groups="hs_query.group_data_analysis_manager"/>
                                 <field name="user_ids" widget="many2many_tags" options="{'no_create_edit': 1, 'no_create': 1}"
                                        groups="hs_query.group_data_analysis_manager"/>
@@ -45,6 +54,7 @@
                                         <field name="sequence" widget="handle"/>
                                         <field name="alias" required="1"/>
                                         <field name="name" required="1"/>
+                                        <field name="show"/>
                                         <field name="note"/>
                                     </tree>
                                 </field>
@@ -67,6 +77,84 @@
                                     </tree>
                                 </field>
                             </page>
+                            <page string="说明">
+                                <group groups="hs_query.group_data_analysis_manager">
+                                    <div style="font-size:12px;color:#0084ff;">
+                                        <ul>
+                                            <li>如果勾选按条件; SQL语句里面要使用到占位符</li>
+                                        </ul>
+                                        <hr/>
+                                        <figure>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>占位符</th>
+                                                        <th>描述</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>UID</td>
+                                                        <td>用户</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>USER_IDS</td>
+                                                        <td>用户(多选)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CONTENT</td>
+                                                        <td>匹配文本</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>START_DATE</td>
+                                                        <td>开始日期</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>END_DATE</td>
+                                                        <td>结束日期</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>START_TIME</td>
+                                                        <td>开始时间</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>END_TIME</td>
+                                                        <td>结束时间</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>--</td>
+                                                        <td>--</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CURRENT_USER</td>
+                                                        <td>当前用户</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TODAY</td>
+                                                        <td>今天</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>THIS_MONTH_START</td>
+                                                        <td>本月开头</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>THIS_MONTH_END</td>
+                                                        <td>本月最后</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>THIS_YEAR_START</td>
+                                                        <td>本年开头</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>THIS_YEAR_END</td>
+                                                        <td>本年最后</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </figure>
+                                    </div>
+                                </group>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>
@@ -80,13 +168,19 @@
                 <tree>
                     <field name="sequence" widget="handle"/>
                     <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object"
+                            attrs="{'invisible': [('use_condition', '=', True)]}"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
                     <button name="download_data" icon="fa-download" string="下载查询结果" type="object"
+                            attrs="{'invisible': [('use_condition', '=', True)]}"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
+                    <button name="query_by_condition" icon="fa-play-circle" string="按条件查询" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('use_condition', '=', False)]}"
+                                groups="hs_query.group_data_analysis_user"/>
                     <field name="name"/>
                     <field name="code"/>
                     <field name="type" groups="hs_query.group_data_analysis_manager"/>
                     <field name="wizard_name" groups="hs_query.group_data_analysis_manager"/>
+                    <field name="use_condition" groups="hs_query.group_data_analysis_manager"/>
                     <field name="create_uid"/>
                     <field name="create_date"/>
                 </tree>

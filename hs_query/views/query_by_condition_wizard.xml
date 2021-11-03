@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="query_by_condition_wizard_form" model="ir.ui.view">
+        <field name="name">query.by.condition.wizard</field>
+        <field name="model">query.by.condition.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="user_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                        <field name="user_ids" widget="many2many_tags" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                        <field name="content"/>
+                        <field name="statement_code" invisible="1"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="start_time"/>
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                        <field name="end_time"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name='confirm_button' class="oe_highlight" type='object' string='确认'/>
+                    <button name='download_data' class="oe_highlight" type='object' string='下载查询结果'/>
+                    <button string="取消" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

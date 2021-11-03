@@ -14,6 +14,16 @@ _logger = logging.getLogger(__name__)
 TAG = "hs_query.sys_query_report"
 
 
+def last_day_of_month(any_day):
+    """
+    获取获得一个月中的最后一天
+    :param any_day: 任意日期
+    :return: string
+    """
+    next_month = any_day.replace(day=28) + datetime.timedelta(days=4)  # this will never fail
+    return next_month - datetime.timedelta(days=next_month.day)
+
+
 class QuerySelectWizardParent(models.AbstractModel):
     _name = 'query.select.wizard.parent'
 
@@ -36,9 +46,10 @@ class QuerySelectWizardParent(models.AbstractModel):
             defaults = json.loads(cache.query_condition)
         return defaults
 
-    def create_cache(self, query_condition, condition_desc='', _uid=None):
+    def create_cache(self, statement_code, query_condition, condition_desc='', _uid=None):
         """
             创建查询条件缓存
+        :param statement_code:
         :param query_condition:
         :param condition_desc:
         :param _uid:
@@ -52,14 +63,14 @@ class QuerySelectWizardParent(models.AbstractModel):
 DELETE FROM 
     hs_query_input_cache 
 WHERE user_id = %s and statement_code = '%s';
-        """ % (_uid, self._statement_code)
+        """ % (_uid, statement_code)
         self._cr.execute(_sql)  # 清空该用户该报表查询条件缓存
 
         cache_obj.create({
             'user_id': _uid,
             'query_condition': json.dumps(query_condition),
-            'condition_desc': json.dumps(condition_desc),
-            'statement_code': self._statement_code,
+            'condition_desc': condition_desc,
+            'statement_code': statement_code,
         })
 
         return True
@@ -85,7 +96,7 @@ WHERE user_id = %s and statement_code = '%s';
     def _confirm(self, statement_code=None):
         statement_code = statement_code if statement_code else self._statement_code
 
-        condition_and_desc = self.get_query_condition_and_desc()
+        condition_and_desc = self.get_query_condition_and_desc(statement_code)
         query_condition = condition_and_desc.get('query_condition', {})
         condition_desc = condition_and_desc.get('condition_desc', '')
         self.validate_condition_for_query(query_condition)
@@ -100,8 +111,8 @@ WHERE user_id = %s and statement_code = '%s';
             },
         }
 
-        self.create_cache(query_condition, condition_desc)
-        res['context'].update(query_condition)
+        self.create_cache(statement_code, query_condition, condition_desc)
+        res['context'].update({'query_condition': query_condition})
         res['context'].update({'condition_desc': condition_desc})
 
         self.env['hs.query.statement'].create_query_record(statement_code, self._uid)
@@ -116,7 +127,7 @@ WHERE user_id = %s and statement_code = '%s';
         self.ensure_one()
         return self._download()
 
-    def _download(self, statement_code=None):
+    def _generate_download_data(self, statement_code=None):
         statement_code = statement_code if statement_code else self._statement_code
 
         query = get_query_statement_by_code(self.env, statement_code)
@@ -126,16 +137,16 @@ WHERE user_id = %s and statement_code = '%s';
         sql = query.statement or ""
 
         # 获取查询条件
-        condition_and_desc = self.get_query_condition_and_desc()
+        condition_and_desc = self.get_query_condition_and_desc(statement_code)
         condition = condition_and_desc.get('query_condition', {})
         condition_desc = condition_and_desc.get('condition_desc', '')
-        self.create_cache(condition, condition_desc)
+        self.create_cache(statement_code, condition, condition_desc)
         # 检验查询条件
         self.validate_condition_for_download(condition)
         final_sql = self.format_sql_by_condition(sql, condition)
 
         # 检验显示列
-        columns = query.get_columns()
+        columns = query.get_columns(hide_index=True)
 
         # 执行sql
         try:
@@ -152,12 +163,22 @@ WHERE user_id = %s and statement_code = '%s';
 
         # 生成excel所需要的数据
         base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data, u'查询条件', self.format_condition_desc_for_excel())
+        return {
+            'xls_name': xls_name,
+            'base_data': base_data,
+            'query_id': query.id
+        }
+
+    def _download(self, statement_code=None):
+        download_data = self._generate_download_data(statement_code=statement_code)
 
         # 调用创建下载
-        download_file_id = self.create_download_file(xls_name, base_data, query.id)
+        xls_name = download_data['xls_name']
+        base_data = download_data['base_data']
+        query_id = download_data['query_id']
 
+        download_file_id = self.create_download_file(xls_name, base_data, query_id)
         view_id = self.env.ref('hs_query.hs_query_download_file_view_form').id
-
         context = self._context.copy()
         res = {
             'type': 'ir.actions.act_window',
@@ -187,16 +208,26 @@ WHERE user_id = %s and statement_code = '%s';
         }).id
         return create_id
 
-    @api.multi
-    def get_query_condition_and_desc(self):
+    def get_query_condition_and_desc(self, statement_code, _uid=None):
         """
             获取查询条件
         :return:
         """
-        return {
-            'query_condition': {},
-            'condition_desc': ""
-        }
+        cache_obj = self.env['hs.query.input.cache']
+        if not _uid:
+            _uid = self._uid
+
+        cache = cache_obj.search([('user_id', '=', _uid), ('statement_code', '=', statement_code)], limit=1)
+        if cache:
+            return {
+                'query_condition': json.loads(cache.query_condition),
+                'condition_desc': cache.condition_desc
+            }
+        else:
+            return {
+                'query_condition': {},
+                'condition_desc': ""
+            }
 
     def format_sql_by_condition(self, sql, condition):
         """
@@ -204,7 +235,20 @@ WHERE user_id = %s and statement_code = '%s';
         :param sql:
         :param condition:
         :return:
+
         """
+        for key, val in condition.items():
+            if isinstance(val, list):
+                condition[key] = tuple(val)
+
+        condition['CURRENT_USER'] = self._uid
+        condition['TODAY'] = datetime.datetime.now().strftime('%Y-%m-%d')
+        condition['THIS_MONTH_START'] = datetime.datetime.now().strftime('%Y-%m-01')
+        condition['THIS_MONTH_END'] = last_day_of_month(datetime.datetime.now()).strftime('%Y-%m-%d')
+        condition['THIS_YEAR_START'] = datetime.datetime.now().strftime('%Y-01-01')
+        condition['THIS_YEAR_END'] = datetime.datetime.now().strftime('%Y-12-31')
+
+        sql = self.env.cr.mogrify(sql, condition)
         return sql
 
     def _validate_condition(self, condition):

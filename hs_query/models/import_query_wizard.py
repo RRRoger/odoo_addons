@@ -34,6 +34,7 @@ class ImportQueryStatementWizard(models.TransientModel):
                 create_id = main_obj.create({
                     'name': name,
                     'code': code,
+                    'use_condition': row['use_condition'],
                     'sequence': row['sequence'],
                     'note': row['note'],
                     'wizard_name': row['wizard_name'],

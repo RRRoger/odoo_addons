@@ -7,7 +7,7 @@ import json
 import jinja2
 from odoo.http import request
 from odoo import http
-from odoo.addons.hs_query.libs.query_libs import get_query_statement_by_code
+from odoo.addons.hs_query.libs.query_libs import get_query_statement_by_code, get_query_inst
 _logger = logging.getLogger(__name__)
 
 
@@ -53,6 +53,7 @@ class QueryController(http.Controller):
         columns = query.get_columns()
 
         data = {
+            'download_url': "/query/download?query_id={}".format(query.id),
             'columns': json.dumps(columns, ensure_ascii=False),
             'context': json.dumps(ctx, ensure_ascii=False),
         }
@@ -64,3 +65,8 @@ class QueryController(http.Controller):
     def query_data(self, *args, **kwargs):
         return request.env['hs.query.adapter'].query_data(*args, **kwargs)
 
+    @http.route('/query/download', type='http', auth='user', csrf=False)
+    def query_download(self, *args, **kwargs):
+        query_id = kwargs.get('query_id')
+        query = get_query_inst(request.env, int(query_id))
+        return request.env['hs.query.adapter'].query_download(query.code)

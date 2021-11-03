@@ -33,6 +33,7 @@ class QueryStatement(models.Model):
     type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql', help=u"目前只有SQL,其他类型待开发!")
     sequence = fields.Integer(string=u'顺序', default=10)
     note = fields.Text(string=u'说明')
+    use_condition = fields.Boolean(string=u'按条件', default=False)
 
     statement = fields.Text(string=u'语句')
     wizard_name = fields.Char(string=u'向导名称', default='query.select.wizard.parent')
@@ -58,10 +59,17 @@ class QueryStatement(models.Model):
         return super(QueryStatement, self).copy(default)
 
     @api.multi
-    def get_columns(self):
+    def get_columns(self, hide_index=False):
+        """
+        :param hide_index: 隐藏序号, 下载excel的时候使用
+        :return:
+        """
         self.ensure_one()
-        columns = [{"title": u"序号", "alias": "__index__", "name": u"序号", "group": ""}]
-        for output in self.output_ids:
+        if hide_index:
+            columns = []
+        else:
+            columns = [{"title": u"序号", "alias": "__index__", "name": u"序号", "group": ""}]
+        for output in self.output_ids.filtered(lambda x: x.show):
             columns.append({
                 'title': output.name,
                 'name': output.name,
@@ -113,6 +121,7 @@ class QueryStatement(models.Model):
                 "note": obj.note,
                 "statement": obj.statement,
                 "wizard_name": obj.wizard_name,
+                "use_condition": obj.use_condition,
             }
             output_ids = []
             for output in obj.output_ids:
@@ -120,7 +129,8 @@ class QueryStatement(models.Model):
                     "name": output.name,
                     "sequence": output.sequence,
                     "alias": output.alias,
-                    "note": output.note
+                    "show": output.show,
+                    "note": output.note,
                 }))
             data['output_ids'] = output_ids
         results.append(data)
@@ -157,6 +167,22 @@ class QueryStatement(models.Model):
         }
         return res
 
+    def query_by_condition(self):
+        view_id = self.env.ref('hs_query.query_by_condition_wizard_form').id
+        create_inst = self.env['query.by.condition.wizard'].create({
+            "statement_code": self.code
+        })
+        res = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'query.by.condition.wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(view_id, 'form')],
+            'target': 'new',
+            'res_id': create_inst.id,
+        }
+        return res
+
 
 class QueryStatementOutput(models.Model):
 
@@ -172,6 +198,7 @@ class QueryStatementOutput(models.Model):
     sequence = fields.Integer(string=u'顺序', default=10)
     alias = fields.Char(string=u'别名', help=u"SQL查询出来的列名")
     note = fields.Text(string=u'说明')
+    show = fields.Boolean(u"显示", default=True)
 
 
 class QueryInputCache(models.Model):
@@ -203,8 +230,8 @@ class QueryDownloadFile(models.Model):
     file = fields.Binary(string=u"下载文件", attachment=True)
     file_name = fields.Char(u'文件名')
 
-    def delete_expired_file(self, days=60):
-        _logger.info("[Query] Start to delete expired files ~~")
+    def delete_expired_file(self, days=7):
+        _logger.info("[Query] Start to delete expired files, days:{} ~~".format(days))
         now = datetime.datetime.now() + datetime.timedelta(days=-days)
         now = now.strftime("%Y-%m-%d %H:%M:%S")
         self.search([('create_date', '<', now)]).unlink()
