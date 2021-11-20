@@ -20,7 +20,36 @@ class QueryByConditionWizard(models.TransientModel):
     end_time = fields.Datetime(u"结束时间")
     content = fields.Char(u"匹配文本")
 
+    statement_name = fields.Char(u"name")
     statement_code = fields.Char(u"code")
+    statement_note = fields.Char(u"说明")
+
+    clear = fields.Boolean(u"清空条件")
+
+    @api.onchange('clear')
+    def onchange_clear(self):
+        if self.clear:
+            self.user_ids = [(6, 0, [])]
+            self.user_id = False
+            self.start_date = False
+            self.end_date = False
+            self.start_time = False
+            self.end_time = False
+            self.content = False
+
+    @api.onchange('statement_code')
+    def onchange_statement_code(self):
+        parent_obj = self.env['query.select.wizard.parent']
+        condition_and_desc = parent_obj.get_query_condition_and_desc(self.statement_code)
+        condition = condition_and_desc.get('query_condition', {})
+        if condition:
+            self.user_ids = [(6, 0, condition.get('USER_IDS') or [])]
+            self.user_id = condition.get('UID') or False
+            self.start_date = condition.get('START_DATE') or ''
+            self.end_date = condition.get('END_DATE') or ''
+            self.start_time = condition.get('START_TIME') or ''
+            self.end_time = condition.get('END_TIME') or ''
+            self.content = condition.get('CONTENT') or ''
 
     @api.multi
     def create_cache(self):

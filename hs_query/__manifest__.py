@@ -10,13 +10,14 @@
     'description': """
     """,
     'website': '',
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
     'data': [
         'security/group_security.xml',
 
         'views/templates.xml',
         'views/web_action.xml',
         'views/query.xml',
+        'views/query_tag.xml',
         'views/query_select_wizard_parent.xml',
         'views/query_input_cache.xml',
         'views/import_query_wizard.xml',
@@ -24,6 +25,7 @@
 
         'query_demo/query_demo_report.xml',
         'query_demo/query_demo_data.xml',
+        'query_demo/query_demo_data2.xml',
 
         'views/menu.xml',
 

@@ -75,13 +75,22 @@ WHERE user_id = %s and statement_code = '%s';
 
         return True
 
-    def format_condition_desc_for_excel(self):
+    def format_condition_desc_for_excel(self, statement_code=None):
         """
             excel展示查询条件
             需要返回一个二维数组
         :return:
         """
-        return []
+        statement_code = statement_code if statement_code else self._statement_code
+        condition_and_desc = self.get_query_condition_and_desc(statement_code)
+        condition_desc = condition_and_desc.get('condition_desc', '')
+
+        res = [
+            [u"条件"],
+        ]
+        for r in condition_desc.split("<br/>"):
+            res.append([r])
+        return res
 
     @api.multi
     def confirm(self):
@@ -161,8 +170,10 @@ WHERE user_id = %s and statement_code = '%s';
 
         xls_name = u'%s(%s).xlsx' % (query.name, now.strftime('%Y%m%d%H%M%S'))
 
+        condition_desc = self.format_condition_desc_for_excel(statement_code)
+
         # 生成excel所需要的数据
-        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data, u'查询条件', self.format_condition_desc_for_excel())
+        base_data = excel_adapter.excel_data_getter(u'查询结果', excel_data, u'查询条件', condition_desc)
         return {
             'xls_name': xls_name,
             'base_data': base_data,

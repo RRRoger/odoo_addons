@@ -4,7 +4,9 @@
 
 .download_url{
     font-weight:bold;
-    font-size:16px
+    font-size:18px;
+    color: #4A8BEE;
+    margin-left: 5px
 }
 
 .condition_desc_title{

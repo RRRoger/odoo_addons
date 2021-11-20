@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<data noupdate="1">
+
+		<record id="statement_query_demo2_report" model="hs.query.statement">
+			<field name="name">[DEMO] 查询某些用户的权限组</field>
+			<!--对应wizard_name-->
+			<field name="wizard_name">query.demo.report.wizard</field>
+			<!--对应wizard里面 _statement_code-->
+			<field name="code">query_demo2_report</field>
+			<field name="type">sql</field>
+			<field name="use_condition" eval="True"></field>
+			<field name="note">请先选择用户!</field>
+			<!--sql语句-->
+			<field name="statement">
+				<![CDATA[
+
+-- 这里百分号需要转义哦
+
+SELECT rp.name AS user_name,
+       ru.login email,
+       coalesce(it_rg.value, rg.name) group_name,
+       coalesce(it_cate.value, cate.name) AS cate_name,
+       format('%%s / %%s', coalesce(it_cate.value, cate.name), coalesce(it_rg.value, rg.name)) AS full_name,
+       rg.id as group_id
+FROM res_users ru
+LEFT JOIN res_partner rp ON rp.id = ru.partner_id
+LEFT JOIN res_groups_users_rel rel ON rel.uid = ru.id
+LEFT JOIN res_groups rg ON rg.id = rel.gid
+LEFT JOIN ir_translation it_rg ON it_rg.res_id = rg.id
+AND it_rg.name = 'res.groups,name'
+AND it_rg.lang = 'zh_CN'
+LEFT JOIN ir_module_category cate ON cate.id = rg.category_id
+LEFT JOIN ir_translation it_cate ON it_cate.res_id = cate.id
+AND it_cate.name = 'ir.module.category,name'
+AND it_cate.lang = 'zh_CN'
+WHERE ru.id in %(USER_IDS)s
+ORDER BY ru.login,
+         cate.id desc,
+         rg.id desc
+
+				]]>
+			</field>
+		</record>
+
+		<!--输出信息-->
+        <record id="statement_query_demo2_report_o01" model="hs.query.statement.output">
+			<field name="name">用户</field>
+			<field name="alias">user_name</field>
+			<field name="sequence">10</field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+        <record id="statement_query_demo2_report_o02" model="hs.query.statement.output">
+			<field name="name">email</field>
+			<field name="alias">email</field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+        <record id="statement_query_demo2_report_o03" model="hs.query.statement.output">
+			<field name="name">权限组</field>
+			<field name="alias">group_name</field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+        <record id="statement_query_demo2_report_o04" model="hs.query.statement.output">
+			<field name="name">权限组类别</field>
+			<field name="alias">cate_name</field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+        <record id="statement_query_demo2_report_o05" model="hs.query.statement.output">
+			<field name="name">权限组全称</field>
+			<field name="alias">full_name</field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+        <record id="statement_query_demo2_report_o06" model="hs.query.statement.output">
+			<field name="name">group_id</field>
+			<field name="alias">group_id</field>
+			<field name="show" eval="False"></field>
+			<field name="statement_id" ref="statement_query_demo2_report"/>
+		</record>
+
+	</data>
+
+</odoo>

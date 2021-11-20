@@ -6,43 +6,34 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight"
-                                attrs="{'invisible': [('use_condition', '=', True)]}"
-                                groups="hs_query.group_data_analysis_user"/>
-                        <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight"
-                                attrs="{'invisible': [('use_condition', '=', True)]}"
-                                groups="hs_query.group_data_analysis_user"/>
-                        <button name="query_by_condition" icon="fa-play-circle" string="按条件查询" type="object" class="oe_highlight"
-                                attrs="{'invisible': [('use_condition', '=', False)]}"
-                                groups="hs_query.group_data_analysis_user"/>
-                        <button name="export_query_statement" icon="fa-cloud-download" string="下载数据库查询配置" type="object"
-                                groups="hs_query.group_data_analysis_manager"/>
-                        <button name="import_query_statement" icon="fa-cloud-upload" string="上传数据库查询配置" type="object"
-                                groups="hs_query.group_data_analysis_manager"/>
+                        <button name="jump2page" icon="fa-play-circle" string="开始查询" type="object" class="oe_highlight" attrs="{'invisible': [('use_condition', '=', True)]}" groups="hs_query.group_data_analysis_user"/>
+                        <button name="download_data" icon="fa-download" string="下载查询结果" type="object" class="oe_highlight" attrs="{'invisible': [('use_condition', '=', True)]}" groups="hs_query.group_data_analysis_user"/>
+                        <button name="query_by_condition" icon="fa-puzzle-piece" string="按条件查询" type="object" class="oe_highlight" attrs="{'invisible': [('use_condition', '=', False)]}" groups="hs_query.group_data_analysis_user"/>
+                        <button name="export_query_statement" icon="fa-cloud-download" string="下载数据库查询配置" type="object" groups="hs_query.group_data_analysis_manager"/>
+                        <button name="import_query_statement" icon="fa-cloud-upload" string="上传数据库查询配置" type="object" groups="hs_query.group_data_analysis_manager"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <h1><field name="name" nolabel="1" required="1"/></h1>
                         </div>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" groups="hs_query.group_data_analysis_manager" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                            </button>
+                        </div>
                         <group>
                             <group>
                                 <field name="code" required="1"/>
-                                <field name="type" required="1"
-                                       groups="hs_query.group_data_analysis_manager"/>
-                                <field name="sequence" required="1"
-                                       groups="hs_query.group_data_analysis_manager"/>
-                                <field name="wizard_name" required="1"
-                                       groups="hs_query.group_data_analysis_manager"/>
-                                <field name="use_condition"
-                                       groups="hs_query.group_data_analysis_manager"/>
-                                <field name="user_ids" widget="many2many_tags" options="{'no_create_edit': 1, 'no_create': 1}"
-                                       groups="hs_query.group_data_analysis_manager"/>
+                                <field name="type" required="1" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="sequence" required="1" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="wizard_name" required="1" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="use_condition" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="user_ids" widget="many2many_tags" options="{'no_create_edit': 1, 'no_create': 1}" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="tag_ids" widget="many2many_tags" groups="hs_query.group_data_analysis_manager"/>
+                                <field name="note"/>
                             </group>
                             <group>
                             </group>
-                        </group>
-                        <group>
-                            <field name="note"/>
                         </group>
                         <notebook>
                             <page string="语句" groups="hs_query.group_data_analysis_manager">
@@ -77,15 +68,14 @@
                                     </tree>
                                 </field>
                             </page>
+                        </notebook>
+                        <notebook>
                             <page string="说明">
                                 <group groups="hs_query.group_data_analysis_manager">
-                                    <div style="font-size:12px;color:#0084ff;">
-                                        <ul>
-                                            <li>如果勾选按条件; SQL语句里面要使用到占位符</li>
-                                        </ul>
-                                        <hr/>
+                                    <div style="font-size:12px;color:#0084ff;font-weight:bold">
+                                        <p>如果勾选按条件; SQL语句里面要使用到占位符</p>
                                         <figure>
-                                            <table>
+                                            <table class="o_list_view table table-condensed table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>占位符</th>
@@ -93,10 +83,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>UID</td>
-                                                        <td>用户</td>
-                                                    </tr>
                                                     <tr>
                                                         <td>USER_IDS</td>
                                                         <td>用户(多选)</td>
@@ -122,8 +108,8 @@
                                                         <td>结束时间</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>--</td>
-                                                        <td>--</td>
+                                                        <td>----</td>
+                                                        <td>----</td>
                                                     </tr>
                                                     <tr>
                                                         <td>CURRENT_USER</td>
@@ -157,6 +143,10 @@
                             </page>
                         </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -173,11 +163,12 @@
                     <button name="download_data" icon="fa-download" string="下载查询结果" type="object"
                             attrs="{'invisible': [('use_condition', '=', True)]}"
                             groups="base.group_system,hs_query.group_data_analysis_user"/>
-                    <button name="query_by_condition" icon="fa-play-circle" string="按条件查询" type="object" class="oe_highlight"
+                    <button name="query_by_condition" icon="fa-puzzle-piece" string="按条件查询" type="object" class="oe_highlight"
                                 attrs="{'invisible': [('use_condition', '=', False)]}"
                                 groups="hs_query.group_data_analysis_user"/>
                     <field name="name"/>
                     <field name="code"/>
+                    <field name="tag_ids" widget="many2many_tags"/>
                     <field name="type" groups="hs_query.group_data_analysis_manager"/>
                     <field name="wizard_name" groups="hs_query.group_data_analysis_manager"/>
                     <field name="use_condition" groups="hs_query.group_data_analysis_manager"/>

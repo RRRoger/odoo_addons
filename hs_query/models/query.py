@@ -18,6 +18,7 @@ class QueryStatement(models.Model):
 
     _name = "hs.query.statement"
     _order = "sequence, id desc"
+    _inherit = ['mail.thread']
 
     # alter table hs_query_statement drop constraint hs_query_statement_unique_statement_wizard_name ;
     # 删除约束
@@ -27,21 +28,24 @@ class QueryStatement(models.Model):
         ('unique_statement_name', 'unique(name)', u'名称不能重复'),
     ]
 
-    name = fields.Char(string=u'名称')
-    code = fields.Char(string=u'代码', help=u"全局唯一, 用于代码中识别!")
-    active = fields.Boolean(string=u'有效', default=True)
-    type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql', help=u"目前只有SQL,其他类型待开发!")
-    sequence = fields.Integer(string=u'顺序', default=10)
-    note = fields.Text(string=u'说明')
-    use_condition = fields.Boolean(string=u'按条件', default=False)
+    name = fields.Char(string=u'名称', track_visibility='onchange')
+    code = fields.Char(string=u'代码', help=u"全局唯一, 用于代码中识别!", track_visibility='onchange')
+    active = fields.Boolean(string=u'有效', default=True, track_visibility='onchange')
+    type = fields.Selection(TYPE_SELECTION, string=u'类型', default='sql', help=u"目前只有SQL,其他类型待开发!", track_visibility='onchange')
+    sequence = fields.Integer(string=u'顺序', default=10, track_visibility='onchange')
+    note = fields.Text(string=u'说明', track_visibility='onchange')
+    use_condition = fields.Boolean(string=u'按条件', default=False, track_visibility='onchange')
 
-    statement = fields.Text(string=u'语句')
-    wizard_name = fields.Char(string=u'向导名称', default='query.select.wizard.parent')
+    statement = fields.Text(string=u'语句', track_visibility='onchange')
+    wizard_name = fields.Char(string=u'向导名称', default='query.select.wizard.parent', track_visibility='onchange')
 
     output_ids = fields.One2many('hs.query.statement.output', 'statement_id', string=u'查询输出', copy=True)
     record_ids = fields.One2many('hs.query.record', 'statement_id', string=u'查询记录', copy=False)
     download_ids = fields.One2many('hs.query.download.file', 'statement_id', string=u'下载记录', copy=False)
     user_ids = fields.Many2many('res.users', 'hs_query_users_rel', 'user_id', 'query_id', u'用户')
+
+    tag_ids = fields.Many2many("hs.query.tag", 'hs_query_tags_rel', 'tag_id', 'query_id', u'标签')
+
 
     @api.model
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
@@ -169,8 +173,11 @@ class QueryStatement(models.Model):
 
     def query_by_condition(self):
         view_id = self.env.ref('hs_query.query_by_condition_wizard_form').id
-        create_inst = self.env['query.by.condition.wizard'].create({
-            "statement_code": self.code
+        ctx = dict(self._context)
+        ctx.update({
+            "default_statement_code": self.code,
+            "default_statement_name": self.name,
+            "default_statement_note": self.note,
         })
         res = {
             'type': 'ir.actions.act_window',
@@ -179,7 +186,8 @@ class QueryStatement(models.Model):
             'view_mode': 'form',
             'views': [(view_id, 'form')],
             'target': 'new',
-            'res_id': create_inst.id,
+            'res_id': False,
+            'context': ctx
         }
         return res
 
@@ -236,3 +244,13 @@ class QueryDownloadFile(models.Model):
         now = now.strftime("%Y-%m-%d %H:%M:%S")
         self.search([('create_date', '<', now)]).unlink()
         return True
+
+
+class QueryTag(models.Model):
+
+    _name = "hs.query.tag"
+    _order = "id desc"
+    _description = u"标签"
+
+    color = fields.Integer(string='Color Index')
+    name = fields.Char("Name")

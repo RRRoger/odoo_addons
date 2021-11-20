@@ -6,10 +6,18 @@
         <field name="model">query.by.condition.wizard</field>
         <field name="arch" type="xml">
             <form>
+                <div class="oe_title" style="color:#0084ff">
+                    <h1><field name="statement_name" nolabel="1" readonly="1"/></h1>
+                </div>
+                <group style="color:#FC9403;font-weight:bold">
+                    <field name="statement_note" nolabel="1" readonly="1"/>
+                </group>
+                <group>
+                    <field name="clear"/>
+                    <field name="user_ids" widget="many2many_tags" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                </group>
                 <group>
                     <group>
-                        <field name="user_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
-                        <field name="user_ids" widget="many2many_tags" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
                         <field name="content"/>
                         <field name="statement_code" invisible="1"/>
                     </group>

@@ -3,7 +3,9 @@
 
 <% block body %>
 
-<a href="${download_url|safe}" class="download_url">点击下载表格:)</a>
+<div class="download_url">
+    <a href="javascript:history.go(-1);" class="fa fa-angle-double-left">返回</a> / <a href="${download_url|safe}" class="fa fa-download">下载表格</a>
+</div>
 <div class="condition_desc_title">查询条件</div>
 <div id="condition_desc" class="condition_desc"></div>
 <br/>

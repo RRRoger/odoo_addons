@@ -48,6 +48,8 @@ class QueryAdapter(models.TransientModel):
         download_data = wizard._generate_download_data(statement_code=statement_code)
         xls_name = download_data['xls_name']
         base_data = download_data['base_data']
+        query_id = download_data['query_id']
+        wizard.create_download_file(xls_name, base_data, query_id)
         return request.make_response(
             base_data,
             headers=[

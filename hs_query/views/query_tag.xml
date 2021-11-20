@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="hs_query_tag_view_tree" model="ir.ui.view">
+            <field name="name">标签</field>
+            <field name="model">hs.query.tag</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hs_query_tag_search_view" model="ir.ui.view">
+            <field name="model">hs.query.tag</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hs_query_tag_action_window" model="ir.actions.act_window">
+            <field name="name">标签</field>
+            <field name="res_model">hs.query.tag</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="hs_query_tag_search_view"/>
+        </record>
+
+    </data>
+</odoo>

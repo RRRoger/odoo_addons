@@ -24,6 +24,11 @@
                           parent="hs_data_analysis_config_menu"
                           action="hs_query_download_file_action_window" sequence="20"/>
 
+                <menuitem id="hs_query_tag_menu" name="标签"
+                          groups="base.group_system,hs_query.group_data_analysis_manager"
+                          parent="hs_data_analysis_config_menu"
+                          action="hs_query_tag_action_window" sequence="25"/>
+
                 <menuitem id="hs_query_input_cache_menu" name="查询条件缓存"
                           groups="base.group_system,hs_query.group_data_analysis_manager"
                           parent="hs_data_analysis_config_menu"
