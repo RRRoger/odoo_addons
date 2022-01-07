@@ -7,7 +7,7 @@ import re
 import base64
 import string
 
-CODE_DESC_HEAD = """# Add Some Frequently-Used libraries In hesai_main By Roger
+CODE_DESC_HEAD = """# Add Some Frequently-Used libraries By Roger
 # - json, re, base64, string: Python libraries
 # * * * * * * * * * * *
 """
